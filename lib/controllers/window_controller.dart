@@ -55,7 +55,7 @@ class WindowController extends StateNotifier<WindowState> {
       // Get the window
       final win = appWindow;
 
-      const initialSize = Size(700, 650);
+      const initialSize = Size(800, 600);
       win.minSize = initialSize;
       win.size = initialSize;
       win.alignment = Alignment.center;

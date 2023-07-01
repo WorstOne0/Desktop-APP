@@ -6,6 +6,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:get/get.dart';
 import 'package:animated_theme_switcher/animated_theme_switcher.dart';
 import 'package:hive_flutter/hive_flutter.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 // Screens
 import '/screens/splash_screen.dart';
 // Services
@@ -71,10 +72,10 @@ class MyApp extends ConsumerWidget {
         // Always start at Splash Screen
         home: const SplashScreen(),
         // Support PT-BR in dates
-        // localizationsDelegates: const [
-        //   ...GlobalMaterialLocalizations.delegates,
-        //   GlobalWidgetsLocalizations.delegate
-        // ],
+        localizationsDelegates: const [
+          ...GlobalMaterialLocalizations.delegates,
+          GlobalWidgetsLocalizations.delegate
+        ],
         supportedLocales: const [Locale('pt', 'BR')],
         // (https://github.com/rrousselGit/riverpod/issues/268)
         navigatorKey: ref.watch(navigatorKeyProvider),
