@@ -3,11 +3,11 @@
 // Flutter packages
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-// Controllers
-import 'package:dollars/controllers/window_controller.dart';
 import 'package:lottie/lottie.dart';
 // Screens
 import 'login.dart';
+// Controllers
+import '/controllers/window_controller.dart';
 
 class SplashScreen extends ConsumerStatefulWidget {
   const SplashScreen({super.key});

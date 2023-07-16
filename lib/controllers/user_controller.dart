@@ -1,6 +1,5 @@
 // Dart
 import 'dart:async';
-import 'dart:convert';
 // Flutter Packages
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -33,14 +32,18 @@ class UserState {
 }
 
 class UserController extends StateNotifier<UserState> {
-  UserController({required this.ref, required this.dioProvider, required this.hiveStorage})
+  UserController(
+      {required this.ref,
+      required this.dioProvider,
+      required this.secureStorage,
+      required this.hiveStorage})
       : super(const UserState(user: null));
 
   Ref ref;
   // Dio
   DioProvider dioProvider;
   // Persist Data
-  SecureStorage storage = SecureStorage();
+  SecureStorage secureStorage;
   HiveStorage hiveStorage;
 
   // User Authentication
@@ -59,6 +62,7 @@ final userProvider = StateNotifierProvider<UserController, UserState>((ref) {
   return UserController(
     ref: ref,
     dioProvider: ref.watch(dioProvider),
+    secureStorage: ref.watch(secureStorageProvider),
     hiveStorage: ref.watch(hiveStorageProvider),
   );
 });

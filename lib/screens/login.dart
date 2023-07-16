@@ -1,12 +1,12 @@
 // Flutter Packages
-import 'package:dollars/screens/home.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+// Screens
+import '/screens/window_frame_page.dart';
 // Controllers
-import 'package:dollars/controllers/window_controller.dart';
+import '/controllers/window_controller.dart';
 // Widgets
-import 'package:dollars/widgets/my_window_frame.dart';
-import 'package:get/get_connect/http/src/utils/utils.dart';
+import '/widgets/my_window_frame.dart';
 
 class Login extends ConsumerStatefulWidget {
   const Login({super.key});
@@ -33,8 +33,8 @@ class _LoginState extends ConsumerState<Login> {
     Navigator.pushReplacement(
       context,
       MaterialPageRoute(
-        builder: (context) => const Home(),
-        settings: const RouteSettings(name: "home.dart"),
+        builder: (context) => const WindowFramePage(),
+        settings: const RouteSettings(name: "window_frame_page.dart"),
       ),
     );
   }

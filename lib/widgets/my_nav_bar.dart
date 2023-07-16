@@ -2,25 +2,29 @@
 
 // Flutter Packages
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+// Screens
+import '/screens/home.dart';
+import '/screens/profile.dart';
+// Controllers
+import '/controllers/route_controller.dart';
 
-enum NavBarRoutes { HOME, GAMES, ANIMES, GROUPS }
-
-class MyNavBar extends StatefulWidget {
+class MyNavBar extends ConsumerStatefulWidget {
   const MyNavBar({super.key});
 
   @override
-  State<MyNavBar> createState() => _MyNavBarState();
+  ConsumerState<MyNavBar> createState() => _MyNavBarState();
 }
 
-class _MyNavBarState extends State<MyNavBar> {
+class _MyNavBarState extends ConsumerState<MyNavBar> {
   bool _isNavBarOpen = true;
-
-  NavBarRoutes routeSelected = NavBarRoutes.HOME;
 
   @override
   Widget build(BuildContext context) {
+    NavBarRoutes routeSelected = ref.watch(routeProvider).routeSelected;
+
     return AnimatedContainer(
-      duration: Duration(milliseconds: 200),
+      duration: const Duration(milliseconds: 200),
       width: _isNavBarOpen ? 200 : 75,
       child: Card(
         elevation: 2,
@@ -40,9 +44,9 @@ class _MyNavBarState extends State<MyNavBar> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Icon(Icons.menu),
-                    if (_isNavBarOpen) SizedBox(width: 10),
-                    if (_isNavBarOpen) Text("DOLLARS"),
+                    const Icon(Icons.menu),
+                    if (_isNavBarOpen) const SizedBox(width: 10),
+                    if (_isNavBarOpen) const Text("Nav Bar"),
                   ],
                 ),
               ),
@@ -50,11 +54,19 @@ class _MyNavBarState extends State<MyNavBar> {
                 children: [
                   MaterialButton(
                     height: 55,
-                    animationDuration: Duration(milliseconds: 200),
+                    animationDuration: const Duration(milliseconds: 200),
                     onPressed: () {
-                      setState(() {
-                        routeSelected = NavBarRoutes.HOME;
-                      });
+                      // Change NavBar Route
+                      ref.read(routeProvider).navigatorKey.currentState!.pushReplacement(
+                            MaterialPageRoute(
+                              builder: (context) => const Home(),
+                              settings: const RouteSettings(name: "home.dart"),
+                            ),
+                          );
+
+                      // Update NavBar Selected
+                      ref.read(routeProvider.notifier).changeNavBarRoute(NavBarRoutes.HOME);
+                      ref.read(routeProvider.notifier).handleRouteStack("replace all", "Home");
                     },
                     shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
                     color: routeSelected == NavBarRoutes.HOME
@@ -63,20 +75,28 @@ class _MyNavBarState extends State<MyNavBar> {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Icon(Icons.home),
-                        if (_isNavBarOpen) SizedBox(width: 10),
-                        if (_isNavBarOpen) Text("Home"),
+                        const Icon(Icons.home),
+                        if (_isNavBarOpen) const SizedBox(width: 10),
+                        if (_isNavBarOpen) const Text("Home"),
                       ],
                     ),
                   ),
-                  SizedBox(height: 20),
+                  const SizedBox(height: 20),
                   MaterialButton(
                     height: 55,
-                    animationDuration: Duration(milliseconds: 200),
+                    animationDuration: const Duration(milliseconds: 200),
                     onPressed: () {
-                      setState(() {
-                        routeSelected = NavBarRoutes.GAMES;
-                      });
+                      // Change NavBar Route
+                      ref.read(routeProvider).navigatorKey.currentState!.pushReplacement(
+                            MaterialPageRoute(
+                              builder: (context) => Container(),
+                              settings: const RouteSettings(name: "games_home.dart"),
+                            ),
+                          );
+
+                      // Update NavBar Selected
+                      ref.read(routeProvider.notifier).changeNavBarRoute(NavBarRoutes.GAMES);
+                      ref.read(routeProvider.notifier).handleRouteStack("replace all", "Games");
                     },
                     shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
                     color: routeSelected == NavBarRoutes.GAMES
@@ -85,20 +105,28 @@ class _MyNavBarState extends State<MyNavBar> {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Icon(Icons.gamepad),
-                        if (_isNavBarOpen) SizedBox(width: 10),
-                        if (_isNavBarOpen) Text("Jogos"),
+                        const Icon(Icons.gamepad),
+                        if (_isNavBarOpen) const SizedBox(width: 10),
+                        if (_isNavBarOpen) const Text("Jogos"),
                       ],
                     ),
                   ),
-                  SizedBox(height: 20),
+                  const SizedBox(height: 20),
                   MaterialButton(
                     height: 55,
-                    animationDuration: Duration(milliseconds: 200),
+                    animationDuration: const Duration(milliseconds: 200),
                     onPressed: () {
-                      setState(() {
-                        routeSelected = NavBarRoutes.ANIMES;
-                      });
+                      // Change NavBar Route
+                      ref.read(routeProvider).navigatorKey.currentState!.pushReplacement(
+                            MaterialPageRoute(
+                              builder: (context) => Container(),
+                              settings: const RouteSettings(name: "animes_home.dart"),
+                            ),
+                          );
+
+                      // Update NavBar Selected
+                      ref.read(routeProvider.notifier).changeNavBarRoute(NavBarRoutes.ANIMES);
+                      ref.read(routeProvider.notifier).handleRouteStack("replace all", "Anime");
                     },
                     shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
                     color: routeSelected == NavBarRoutes.ANIMES
@@ -107,20 +135,28 @@ class _MyNavBarState extends State<MyNavBar> {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Icon(Icons.bookmark_add),
-                        if (_isNavBarOpen) SizedBox(width: 10),
-                        if (_isNavBarOpen) Text("Anime"),
+                        const Icon(Icons.bookmark_add),
+                        if (_isNavBarOpen) const SizedBox(width: 10),
+                        if (_isNavBarOpen) const Text("Anime"),
                       ],
                     ),
                   ),
-                  SizedBox(height: 20),
+                  const SizedBox(height: 20),
                   MaterialButton(
                     height: 55,
-                    animationDuration: Duration(milliseconds: 200),
+                    animationDuration: const Duration(milliseconds: 200),
                     onPressed: () {
-                      setState(() {
-                        routeSelected = NavBarRoutes.GROUPS;
-                      });
+                      // Change NavBar Route
+                      ref.read(routeProvider).navigatorKey.currentState!.pushReplacement(
+                            MaterialPageRoute(
+                              builder: (context) => Container(),
+                              settings: const RouteSettings(name: "groups_home.dart"),
+                            ),
+                          );
+
+                      // Update NavBar Selected
+                      ref.read(routeProvider.notifier).changeNavBarRoute(NavBarRoutes.GROUPS);
+                      ref.read(routeProvider.notifier).handleRouteStack("replace all", "Group");
                     },
                     shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
                     color: routeSelected == NavBarRoutes.GROUPS
@@ -129,34 +165,68 @@ class _MyNavBarState extends State<MyNavBar> {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Icon(Icons.group),
-                        if (_isNavBarOpen) SizedBox(width: 10),
-                        if (_isNavBarOpen) Text("Grupos"),
+                        const Icon(Icons.group),
+                        if (_isNavBarOpen) const SizedBox(width: 10),
+                        if (_isNavBarOpen) const Text("Grupos"),
                       ],
                     ),
                   ),
                 ],
               ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  CircleAvatar(
-                    radius: 20,
-                    backgroundColor: Colors.amber,
-                    backgroundImage: Image.network(
-                            "https://avatars.akamai.steamstatic.com/54ebc5eecc532e7afed9498dde2132658cc1a65a_full.jpg")
-                        .image,
-                  ),
-                  if (_isNavBarOpen) SizedBox(width: 10),
-                  if (_isNavBarOpen)
-                    Text(
-                      "Divide By Zero",
-                      style: TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.bold,
+              MaterialButton(
+                height: 70,
+                onPressed: () {
+                  // Change NavBar Route
+                  ref.read(routeProvider).navigatorKey.currentState!.pushReplacement(
+                        MaterialPageRoute(
+                          builder: (context) => const Profile(),
+                          settings: const RouteSettings(name: "profile.dart"),
+                        ),
+                      );
+
+                  // Update NavBar Selected
+                  ref.read(routeProvider.notifier).changeNavBarRoute(NavBarRoutes.PROFILE);
+                  ref.read(routeProvider.notifier).handleRouteStack("replace all", "Profile");
+                },
+                padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 5),
+                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    CircleAvatar(
+                      radius: routeSelected == NavBarRoutes.PROFILE ? 23 : 20,
+                      backgroundColor: Theme.of(context).colorScheme.primary,
+                      child: CircleAvatar(
+                        radius: 20,
+                        backgroundColor: Colors.amber,
+                        backgroundImage: Image.network(
+                                "https://avatars.akamai.steamstatic.com/54ebc5eecc532e7afed9498dde2132658cc1a65a_full.jpg")
+                            .image,
                       ),
                     ),
-                ],
+                    if (_isNavBarOpen) const SizedBox(width: 10),
+                    if (_isNavBarOpen)
+                      const Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            "Divide By Zero",
+                            style: TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          Text(
+                            "Best Flutter Dev",
+                            style: TextStyle(
+                              color: Colors.grey,
+                              fontSize: 12,
+                            ),
+                          )
+                        ],
+                      ),
+                  ],
+                ),
               )
             ],
           ),

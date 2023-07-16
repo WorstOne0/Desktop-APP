@@ -2,12 +2,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:bitsdojo_window/bitsdojo_window.dart';
-// Models
-import '/models/user/user.dart';
-// Services
-import '/services/dio_provider.dart';
-import '/services/secure_storage.dart';
-import '/services/hive_storage.dart';
 
 // My Controller are a mix between the Controller and Repository from the
 // Riverpod Architecture (https://codewithandrea.com/articles/flutter-app-architecture-riverpod-introduction/).
@@ -55,7 +49,7 @@ class WindowController extends StateNotifier<WindowState> {
       // Get the window
       final win = appWindow;
 
-      const initialSize = Size(800, 600);
+      const initialSize = Size(800, 530);
       win.minSize = initialSize;
       win.size = initialSize;
       win.alignment = Alignment.center;

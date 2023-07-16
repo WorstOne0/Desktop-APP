@@ -1,12 +1,6 @@
 // Flutter Packages
-import 'package:dollars/controllers/steam_controller.dart';
-import 'package:dollars/widgets/my_nav_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-// Controllers
-import 'package:dollars/controllers/window_controller.dart';
-// Widgets
-import 'package:dollars/widgets/my_window_frame.dart';
 
 class Home extends ConsumerStatefulWidget {
   const Home({super.key});
@@ -17,34 +11,41 @@ class Home extends ConsumerStatefulWidget {
 
 class _HomeState extends ConsumerState<Home> {
   @override
-  void initState() {
-    super.initState();
-
-    // Window Controller
-    ref.read(windowProvider.notifier).homeCallback();
-  }
-
-  @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: MyWindowFrame(
-        child: LayoutBuilder(
-          builder: (context, constraints) => Padding(
-            padding: const EdgeInsets.fromLTRB(20, 0, 20, 20),
-            child: Row(
+      body: LayoutBuilder(
+        builder: (context, constraints) => ListView(
+          padding: const EdgeInsets.fromLTRB(20, 0, 20, 20),
+          children: [
+            const Padding(
+              padding: EdgeInsets.symmetric(horizontal: 15),
+              child: Text(
+                "Destaques",
+                style: TextStyle(
+                  color: Colors.grey,
+                  fontSize: 24,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ),
+            const SizedBox(height: 5),
+            Card(
+              elevation: 2,
+              child: Container(
+                height: 350,
+              ),
+            ),
+            const SizedBox(height: 20),
+            Row(
               children: [
-                // App Bar
-                const MyNavBar(),
-
-                // Content
                 Expanded(
-                  child: ListView(
-                    padding: const EdgeInsets.fromLTRB(20, 0, 20, 20),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 15),
+                      const Padding(
+                        padding: EdgeInsets.symmetric(horizontal: 15),
                         child: Text(
-                          "Destaques",
+                          "Seu Feed",
                           style: TextStyle(
                             color: Colors.grey,
                             fontSize: 24,
@@ -52,72 +53,84 @@ class _HomeState extends ConsumerState<Home> {
                           ),
                         ),
                       ),
-                      SizedBox(height: 5),
                       Card(
                         elevation: 2,
                         child: Container(
-                          height: 350,
+                          height: 1400,
                         ),
                       ),
-                      SizedBox(height: 20),
-                      Row(
-                        children: [
-                          Expanded(
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
+                    ],
+                  ),
+                ),
+                const SizedBox(width: 20),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 15),
+                      child: Text(
+                        "Side Bar",
+                        style: TextStyle(
+                          color: Colors.grey,
+                          fontSize: 24,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
+                    Card(
+                      elevation: 2,
+                      child: Container(
+                        height: 1400,
+                        width: 300,
+                        padding: const EdgeInsets.all(15),
+                        child: const Column(
+                          children: [
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                Padding(
-                                  padding: const EdgeInsets.symmetric(horizontal: 15),
-                                  child: Text(
-                                    "Seu Feed",
-                                    style: TextStyle(
-                                      color: Colors.grey,
-                                      fontSize: 24,
-                                      fontWeight: FontWeight.bold,
-                                    ),
+                                Text(
+                                  "Recent Chat",
+                                  style: TextStyle(
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.bold,
                                   ),
                                 ),
-                                Card(
-                                  elevation: 2,
-                                  child: Container(
-                                    height: 1400,
+                                Text(
+                                  "All",
+                                  style: TextStyle(
+                                    color: Colors.grey,
                                   ),
                                 ),
                               ],
                             ),
-                          ),
-                          SizedBox(width: 20),
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Padding(
-                                padding: const EdgeInsets.symmetric(horizontal: 15),
-                                child: Text(
-                                  "Side Bar",
+                            SizedBox(height: 100),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text(
+                                  "Recent Activity",
                                   style: TextStyle(
-                                    color: Colors.grey,
-                                    fontSize: 24,
+                                    fontSize: 16,
                                     fontWeight: FontWeight.bold,
                                   ),
                                 ),
-                              ),
-                              Card(
-                                elevation: 2,
-                                child: Container(
-                                  height: 1400,
-                                  width: 300,
+                                Text(
+                                  "All",
+                                  style: TextStyle(
+                                    color: Colors.grey,
+                                  ),
                                 ),
-                              ),
-                            ],
-                          ),
-                        ],
-                      )
-                    ],
-                  ),
-                )
+                              ],
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
               ],
-            ),
-          ),
+            )
+          ],
         ),
       ),
     );

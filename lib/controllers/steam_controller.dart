@@ -1,16 +1,11 @@
 // Dart
 import 'dart:async';
-import 'dart:convert';
 // Flutter Packages
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:dio/dio.dart';
-// Models
-import '/models/user/user.dart';
 // Services
 import '/services/dio_provider.dart';
-import '/services/secure_storage.dart';
-import '/services/hive_storage.dart';
 
 // My Controller are a mix between the Controller and Repository from the
 // Riverpod Architecture (https://codewithandrea.com/articles/flutter-app-architecture-riverpod-introduction/).
@@ -20,21 +15,21 @@ import '/services/hive_storage.dart';
 @immutable
 class SteamState {
   const SteamState({
-    required this.user,
+    required this.placeHolder,
   });
 
-  final User? user;
+  final String? placeHolder;
 
-  SteamState copyWith({User? user}) {
+  SteamState copyWith({String? placeHolder}) {
     return SteamState(
-      user: user ?? this.user,
+      placeHolder: placeHolder ?? this.placeHolder,
     );
   }
 }
 
 class SteamController extends StateNotifier<SteamState> {
   SteamController({required this.ref, required this.dioProvider})
-      : super(const SteamState(user: null));
+      : super(const SteamState(placeHolder: ""));
 
   Ref ref;
   // Dio
