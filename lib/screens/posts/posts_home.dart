@@ -2,14 +2,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class Home extends ConsumerStatefulWidget {
-  const Home({super.key});
+class PostsHome extends ConsumerStatefulWidget {
+  const PostsHome({super.key});
 
   @override
-  ConsumerState<Home> createState() => _HomeState();
+  ConsumerState<PostsHome> createState() => _PostsHomeState();
 }
 
-class _HomeState extends ConsumerState<Home> {
+class _PostsHomeState extends ConsumerState<PostsHome> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -130,6 +130,16 @@ class _HomeState extends ConsumerState<Home> {
                 ),
               ],
             )
+          ],
+        ),
+      ),
+      floatingActionButton: FloatingActionButton.extended(
+        onPressed: () {},
+        label: Row(
+          children: [
+            Icon(Icons.add),
+            SizedBox(width: 5),
+            Text("Adicionar Post"),
           ],
         ),
       ),

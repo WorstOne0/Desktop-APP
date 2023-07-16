@@ -4,8 +4,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 // Screens
-import '/screens/home.dart';
-import '/screens/profile.dart';
+import '/screens/posts/posts_home.dart';
+import '/screens/profile/profile_home.dart';
+import '/screens/animes/animes_home.dart';
+import '/screens/games/games_home.dart';
+import '/screens/groups/groups_home.dart';
 // Controllers
 import '/controllers/route_controller.dart';
 
@@ -59,8 +62,8 @@ class _MyNavBarState extends ConsumerState<MyNavBar> {
                       // Change NavBar Route
                       ref.read(routeProvider).navigatorKey.currentState!.pushReplacement(
                             MaterialPageRoute(
-                              builder: (context) => const Home(),
-                              settings: const RouteSettings(name: "home.dart"),
+                              builder: (context) => const PostsHome(),
+                              settings: const RouteSettings(name: "posts_home.dart"),
                             ),
                           );
 
@@ -89,7 +92,7 @@ class _MyNavBarState extends ConsumerState<MyNavBar> {
                       // Change NavBar Route
                       ref.read(routeProvider).navigatorKey.currentState!.pushReplacement(
                             MaterialPageRoute(
-                              builder: (context) => Container(),
+                              builder: (context) => GamesHome(),
                               settings: const RouteSettings(name: "games_home.dart"),
                             ),
                           );
@@ -119,7 +122,7 @@ class _MyNavBarState extends ConsumerState<MyNavBar> {
                       // Change NavBar Route
                       ref.read(routeProvider).navigatorKey.currentState!.pushReplacement(
                             MaterialPageRoute(
-                              builder: (context) => Container(),
+                              builder: (context) => AnimesHome(),
                               settings: const RouteSettings(name: "animes_home.dart"),
                             ),
                           );
@@ -149,7 +152,7 @@ class _MyNavBarState extends ConsumerState<MyNavBar> {
                       // Change NavBar Route
                       ref.read(routeProvider).navigatorKey.currentState!.pushReplacement(
                             MaterialPageRoute(
-                              builder: (context) => Container(),
+                              builder: (context) => GroupsHome(),
                               settings: const RouteSettings(name: "groups_home.dart"),
                             ),
                           );
@@ -179,7 +182,7 @@ class _MyNavBarState extends ConsumerState<MyNavBar> {
                   // Change NavBar Route
                   ref.read(routeProvider).navigatorKey.currentState!.pushReplacement(
                         MaterialPageRoute(
-                          builder: (context) => const Profile(),
+                          builder: (context) => const ProfileHome(),
                           settings: const RouteSettings(name: "profile.dart"),
                         ),
                       );
@@ -198,7 +201,6 @@ class _MyNavBarState extends ConsumerState<MyNavBar> {
                       backgroundColor: Theme.of(context).colorScheme.primary,
                       child: CircleAvatar(
                         radius: 20,
-                        backgroundColor: Colors.amber,
                         backgroundImage: Image.network(
                                 "https://avatars.akamai.steamstatic.com/54ebc5eecc532e7afed9498dde2132658cc1a65a_full.jpg")
                             .image,
@@ -217,7 +219,7 @@ class _MyNavBarState extends ConsumerState<MyNavBar> {
                             ),
                           ),
                           Text(
-                            "Best Flutter Dev",
+                            "@divide_by_zero",
                             style: TextStyle(
                               color: Colors.grey,
                               fontSize: 12,

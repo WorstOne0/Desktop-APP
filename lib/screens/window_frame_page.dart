@@ -2,7 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 // Screens
-import '/screens/home.dart';
+import 'posts/posts_home.dart';
 // Controllers
 import '/controllers/route_controller.dart';
 import '/controllers/window_controller.dart';
@@ -54,7 +54,7 @@ class _WindowFramePageState extends ConsumerState<WindowFramePage> {
                 child: Navigator(
                   key: navigatorKey,
                   onGenerateRoute: (route) => MaterialPageRoute(
-                    builder: (context) => const Home(),
+                    builder: (context) => const PostsHome(),
                     settings: route,
                   ),
                 ),

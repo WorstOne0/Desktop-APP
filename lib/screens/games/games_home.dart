@@ -1,14 +1,14 @@
 // Flutter Packages
 import 'package:flutter/material.dart';
 
-class Profile extends StatefulWidget {
-  const Profile({super.key});
+class GamesHome extends StatefulWidget {
+  const GamesHome({super.key});
 
   @override
-  State<Profile> createState() => _ProfileState();
+  State<GamesHome> createState() => _GamesHomeState();
 }
 
-class _ProfileState extends State<Profile> {
+class _GamesHomeState extends State<GamesHome> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(

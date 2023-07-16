@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:bitsdojo_window/bitsdojo_window.dart';
 // Controlers
-import 'package:dollars/controllers/route_controller.dart';
+import '/controllers/route_controller.dart';
 
 class MyWindowFrame extends ConsumerStatefulWidget {
   MyWindowFrame({required this.child, super.key});
