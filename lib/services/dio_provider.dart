@@ -20,7 +20,7 @@ class DioProvider {
 
   DioProvider() {
     BaseOptions defaultOptions = BaseOptions(
-      baseUrl: "https://api.wikidados.com.br",
+      baseUrl: "http://localhost:4000",
       connectTimeout: Parameters.CONNECT_TIMEOUT,
       receiveTimeout: Parameters.RECEIVE_TIMEOUT,
       sendTimeout: Parameters.SEND_TIMEOUT,
@@ -33,16 +33,16 @@ class DioProvider {
     _dio.interceptors.add(
       InterceptorsWrapper(
         onRequest: (options, handler) async {
-          // if (options.path != getUrl(AUTHORIZATION_LOGIN) &&
-          //     !options.headers.containsKey(HttpHeaders.authorizationHeader)) {
-          //   // Retrieve token
-          //   String? authorizationToken = await _storage.readString("authorizationToken");
+          if (options.path != "/login" &&
+              !options.headers.containsKey(HttpHeaders.authorizationHeader)) {
+            // Retrieve token
+            String? authorizationToken = await _storage.readString("accessToken");
 
-          //   // Send the token
-          //   if (authorizationToken != null) {
-          //     options.headers[HttpHeaders.authorizationHeader] = "Bearer $authorizationToken";
-          //   }
-          // }
+            // Send the token
+            if (authorizationToken != null) {
+              options.headers[HttpHeaders.authorizationHeader] = "Bearer $authorizationToken";
+            }
+          }
 
           return handler.next(options);
         },

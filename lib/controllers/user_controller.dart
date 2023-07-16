@@ -1,5 +1,6 @@
 // Dart
 import 'dart:async';
+import 'dart:convert';
 // Flutter Packages
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -51,8 +52,34 @@ class UserController extends StateNotifier<UserState> {
     return false;
   }
 
-  Future<bool> login(Map<String, String> data, bool isEmail) async {
-    return false;
+  Future<({bool success, String errorMessage})> login(Map<String, String> data) async {
+    try {
+      // Get user, and authorization token
+      Response res = await dioProvider.dio.post(
+        "/login",
+        data: data,
+      );
+
+      // Save the token, user and password
+      String accessToken = res.data["accessToken"];
+      secureStorage.saveString("accessToken", accessToken);
+
+      secureStorage.saveString("email", data["email"] ?? "");
+      secureStorage.saveString("password", data["password"] ?? "");
+
+      // Create User
+      User myUser = User.fromJson(res.data);
+      state = state.copyWith(user: myUser);
+
+      // Save User to Local Storage
+      secureStorage.saveString("user", jsonEncode(myUser.toJson()));
+
+      return (success: true, errorMessage: "");
+    } on DioException {
+      return (success: false, errorMessage: "");
+    } catch (error) {
+      return (success: false, errorMessage: error.toString());
+    }
   }
 
   void logout() {}

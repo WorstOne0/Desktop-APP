@@ -11,6 +11,9 @@ import '/screens/games/games_home.dart';
 import '/screens/groups/groups_home.dart';
 // Controllers
 import '/controllers/route_controller.dart';
+import '/controllers/user_controller.dart';
+// Models
+import '/models/user/user.dart';
 
 class MyNavBar extends ConsumerStatefulWidget {
   const MyNavBar({super.key});
@@ -25,6 +28,8 @@ class _MyNavBarState extends ConsumerState<MyNavBar> {
   @override
   Widget build(BuildContext context) {
     NavBarRoutes routeSelected = ref.watch(routeProvider).routeSelected;
+
+    User user = ref.watch(userProvider).user!;
 
     return AnimatedContainer(
       duration: const Duration(milliseconds: 200),
@@ -92,7 +97,7 @@ class _MyNavBarState extends ConsumerState<MyNavBar> {
                       // Change NavBar Route
                       ref.read(routeProvider).navigatorKey.currentState!.pushReplacement(
                             MaterialPageRoute(
-                              builder: (context) => GamesHome(),
+                              builder: (context) => const GamesHome(),
                               settings: const RouteSettings(name: "games_home.dart"),
                             ),
                           );
@@ -122,7 +127,7 @@ class _MyNavBarState extends ConsumerState<MyNavBar> {
                       // Change NavBar Route
                       ref.read(routeProvider).navigatorKey.currentState!.pushReplacement(
                             MaterialPageRoute(
-                              builder: (context) => AnimesHome(),
+                              builder: (context) => const AnimesHome(),
                               settings: const RouteSettings(name: "animes_home.dart"),
                             ),
                           );
@@ -152,7 +157,7 @@ class _MyNavBarState extends ConsumerState<MyNavBar> {
                       // Change NavBar Route
                       ref.read(routeProvider).navigatorKey.currentState!.pushReplacement(
                             MaterialPageRoute(
-                              builder: (context) => GroupsHome(),
+                              builder: (context) => const GroupsHome(),
                               settings: const RouteSettings(name: "groups_home.dart"),
                             ),
                           );
@@ -199,28 +204,28 @@ class _MyNavBarState extends ConsumerState<MyNavBar> {
                     CircleAvatar(
                       radius: routeSelected == NavBarRoutes.PROFILE ? 23 : 20,
                       backgroundColor: Theme.of(context).colorScheme.primary,
-                      child: CircleAvatar(
-                        radius: 20,
-                        backgroundImage: Image.network(
-                                "https://avatars.akamai.steamstatic.com/54ebc5eecc532e7afed9498dde2132658cc1a65a_full.jpg")
-                            .image,
-                      ),
+                      child: user.profilePicture != null
+                          ? CircleAvatar(
+                              radius: 20,
+                              backgroundImage: Image.network(user.profilePicture!).image,
+                            )
+                          : null,
                     ),
                     if (_isNavBarOpen) const SizedBox(width: 10),
                     if (_isNavBarOpen)
-                      const Column(
+                      Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            "Divide By Zero",
-                            style: TextStyle(
+                            user.screenName,
+                            style: const TextStyle(
                               fontSize: 16,
                               fontWeight: FontWeight.bold,
                             ),
                           ),
                           Text(
-                            "@divide_by_zero",
-                            style: TextStyle(
+                            "@${user.userName}",
+                            style: const TextStyle(
                               color: Colors.grey,
                               fontSize: 12,
                             ),

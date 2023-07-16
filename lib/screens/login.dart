@@ -1,4 +1,6 @@
 // Flutter Packages
+import 'package:dollars/controllers/user_controller.dart';
+import 'package:dollars/widgets/my_snackbar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 // Screens
@@ -30,13 +32,28 @@ class _LoginState extends ConsumerState<Login> {
   }
 
   void handleLogin() async {
-    Navigator.pushReplacement(
-      context,
-      MaterialPageRoute(
-        builder: (context) => const WindowFramePage(),
-        settings: const RouteSettings(name: "window_frame_page.dart"),
-      ),
+    var response = await ref.read(userProvider.notifier).login(
+      {
+        "email": _userController.text,
+        "password": _passwordController.text,
+      },
     );
+
+    if (response.success) {
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(
+          builder: (context) => const WindowFramePage(),
+          settings: const RouteSettings(name: "window_frame_page.dart"),
+        ),
+      );
+
+      return;
+    }
+
+    ScaffoldMessenger.of(context)
+      ..hideCurrentSnackBar()
+      ..showSnackBar(mySnackBar(Colors.red, Icons.error, "Erro ao Realizar Login"));
   }
 
   @override
