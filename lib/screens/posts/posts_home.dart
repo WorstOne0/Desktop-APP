@@ -82,7 +82,7 @@ class _PostsHomeState extends ConsumerState<PostsHome> {
                       child: Container(
                         height: 1400,
                         width: 300,
-                        padding: const EdgeInsets.all(15),
+                        padding: const EdgeInsets.all(20),
                         child: const Column(
                           children: [
                             Row(

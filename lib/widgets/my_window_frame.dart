@@ -91,6 +91,7 @@ class _MyWindowFrameState extends ConsumerState<MyWindowFrame> {
                                                 Icons.keyboard_arrow_right,
                                                 size: 16,
                                               ),
+                                              const SizedBox(width: 5),
                                             ],
                                           ),
                                         )

@@ -34,9 +34,13 @@ class _LoginState extends ConsumerState<Login> {
   void handleLogin() async {
     var response = await ref.read(userProvider.notifier).login(
       {
-        "email": _userController.text,
-        "password": _passwordController.text,
+        "email": "luccagabriel12@hotmail.com",
+        "password": "nemteconto1",
       },
+      // {
+      //   "email": _userController.text,
+      //   "password": _passwordController.text,
+      // },
     );
 
     if (response.success) {
