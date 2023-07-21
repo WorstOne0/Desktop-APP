@@ -64,7 +64,14 @@ class _LoginState extends ConsumerState<Login> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: MyWindowFrame(
-        child: Padding(
+        isLogin: true,
+        child: Container(
+          decoration: BoxDecoration(
+            image: DecorationImage(
+              image: Image.asset("assets/images/space_background.png").image,
+              fit: BoxFit.cover,
+            ),
+          ),
           padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 25),
           child: Row(
             children: [
@@ -192,12 +199,9 @@ class _LoginState extends ConsumerState<Login> {
                 ),
               ),
               SizedBox(width: 20),
-              Card(
-                elevation: 2,
-                child: Container(
-                  height: 450,
-                  width: 300,
-                ),
+              Container(
+                height: 450,
+                width: 300,
               )
             ],
           ),

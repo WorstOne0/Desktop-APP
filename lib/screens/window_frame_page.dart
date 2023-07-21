@@ -42,6 +42,7 @@ class _WindowFramePageState extends ConsumerState<WindowFramePage> {
 
     return Scaffold(
       body: MyWindowFrame(
+        isLogin: false,
         child: Padding(
           padding: const EdgeInsets.fromLTRB(20, 0, 20, 20),
           child: Row(

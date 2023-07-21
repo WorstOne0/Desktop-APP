@@ -30,7 +30,7 @@ class _ProfileHomeState extends ConsumerState<ProfileHome> {
                 borderRadius: BorderRadius.circular(8),
                 image: DecorationImage(
                   image: Image.network(
-                    "https://www.pixel4k.com/wp-content/uploads/2019/11/cyberpunk-city_1574940837.jpg",
+                    "https://wallpapers.com/images/hd/foggy-mountain-minimalist-1s0w3a4nti5bvzw7.webp",
                   ).image,
                   fit: BoxFit.cover,
                 ),
@@ -47,13 +47,13 @@ class _ProfileHomeState extends ConsumerState<ProfileHome> {
                       clipper: MyCustomClipper(),
                       child: Card(
                         elevation: 2,
-                        child: Container(
+                        child: SizedBox(
                           height: 300,
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               // Upper
-                              Container(
+                              SizedBox(
                                 height: 120,
                                 child: Row(
                                   children: [
@@ -61,40 +61,40 @@ class _ProfileHomeState extends ConsumerState<ProfileHome> {
                                     Expanded(
                                       child: Container(
                                         alignment: Alignment.topCenter,
-                                        padding: EdgeInsets.all(20),
+                                        padding: const EdgeInsets.all(20),
                                         child: Row(
                                           children: [
                                             IconButton(
                                               onPressed: () {},
-                                              icon: Icon(
+                                              icon: const Icon(
                                                 FontAwesomeIcons.steam,
                                                 color: Color(0xFF171a21),
                                               ),
                                             ),
                                             IconButton(
                                               onPressed: () {},
-                                              icon: Icon(
+                                              icon: const Icon(
                                                 FontAwesomeIcons.discord,
                                                 color: Color(0xFF7289da),
                                               ),
                                             ),
                                             IconButton(
                                               onPressed: () {},
-                                              icon: Icon(
+                                              icon: const Icon(
                                                 FontAwesomeIcons.teamspeak,
                                                 color: Color(0xFF2580c3),
                                               ),
                                             ),
                                             IconButton(
                                               onPressed: () {},
-                                              icon: Icon(
+                                              icon: const Icon(
                                                 FontAwesomeIcons.instagram,
                                                 color: Color(0xFFE1306C),
                                               ),
                                             ),
                                             IconButton(
                                               onPressed: () {},
-                                              icon: Icon(
+                                              icon: const Icon(
                                                 FontAwesomeIcons.reddit,
                                                 color: Color(0xFFFF5700),
                                               ),
@@ -114,13 +114,13 @@ class _ProfileHomeState extends ConsumerState<ProfileHome> {
                                     Expanded(
                                       child: Container(
                                         alignment: Alignment.topCenter,
-                                        padding: EdgeInsets.all(20),
+                                        padding: const EdgeInsets.all(20),
                                         child: Row(
                                           mainAxisAlignment: MainAxisAlignment.end,
                                           children: [
                                             IconButton(
                                               onPressed: () {},
-                                              icon: Icon(
+                                              icon: const Icon(
                                                 true
                                                     ? FontAwesomeIcons.heart
                                                     : FontAwesomeIcons.solidHeart,
@@ -129,7 +129,7 @@ class _ProfileHomeState extends ConsumerState<ProfileHome> {
                                             ),
                                             IconButton(
                                               onPressed: () {},
-                                              icon: Icon(
+                                              icon: const Icon(
                                                 true ? Icons.person_add : Icons.group,
                                               ),
                                             ),
@@ -144,24 +144,22 @@ class _ProfileHomeState extends ConsumerState<ProfileHome> {
                               // Lower
                               Expanded(
                                   child: Container(
-                                padding: EdgeInsets.fromLTRB(20, 0, 20, 20),
+                                padding: const EdgeInsets.fromLTRB(20, 0, 20, 20),
                                 alignment: Alignment.center,
                                 child: Row(
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   crossAxisAlignment: CrossAxisAlignment.end,
                                   children: [
-                                    Expanded(
-                                      child: Container(
-                                        child: Row(
-                                          children: [
-                                            Icon(Icons.calendar_month),
-                                            SizedBox(width: 10),
-                                            Text(
-                                              "Member since Jun, 2023",
-                                              style: TextStyle(fontSize: 14),
-                                            ),
-                                          ],
-                                        ),
+                                    const Expanded(
+                                      child: Row(
+                                        children: [
+                                          Icon(Icons.calendar_month),
+                                          SizedBox(width: 10),
+                                          Text(
+                                            "Member since Jun, 2023",
+                                            style: TextStyle(fontSize: 14),
+                                          ),
+                                        ],
                                       ),
                                     ),
                                     Column(
@@ -173,13 +171,13 @@ class _ProfileHomeState extends ConsumerState<ProfileHome> {
                                               children: [
                                                 Text(
                                                   user.screenName,
-                                                  style: TextStyle(
+                                                  style: const TextStyle(
                                                     fontSize: 24,
                                                     fontWeight: FontWeight.bold,
                                                   ),
                                                 ),
-                                                SizedBox(width: 10),
-                                                Icon(
+                                                const SizedBox(width: 10),
+                                                const Icon(
                                                   Icons.verified,
                                                   color: Colors.blue,
                                                 )
@@ -187,13 +185,13 @@ class _ProfileHomeState extends ConsumerState<ProfileHome> {
                                             ),
                                             Text(
                                               "@${user.userName}",
-                                              style: TextStyle(
+                                              style: const TextStyle(
                                                 fontStyle: FontStyle.italic,
                                               ),
                                             )
                                           ],
                                         ),
-                                        Row(
+                                        const Row(
                                           mainAxisAlignment: MainAxisAlignment.end,
                                           children: [
                                             Row(
@@ -215,19 +213,17 @@ class _ProfileHomeState extends ConsumerState<ProfileHome> {
                                         ),
                                       ],
                                     ),
-                                    Expanded(
-                                      child: Container(
-                                        child: Row(
-                                          mainAxisAlignment: MainAxisAlignment.end,
-                                          children: [
-                                            Icon(Icons.flag),
-                                            SizedBox(width: 10),
-                                            Text(
-                                              "Brasil, Paraná",
-                                              style: TextStyle(fontSize: 14),
-                                            ),
-                                          ],
-                                        ),
+                                    const Expanded(
+                                      child: Row(
+                                        mainAxisAlignment: MainAxisAlignment.end,
+                                        children: [
+                                          Icon(Icons.flag),
+                                          SizedBox(width: 10),
+                                          Text(
+                                            "Brasil, Paraná",
+                                            style: TextStyle(fontSize: 14),
+                                          ),
+                                        ],
                                       ),
                                     ),
                                   ],
@@ -245,7 +241,6 @@ class _ProfileHomeState extends ConsumerState<ProfileHome> {
                       alignment: Alignment.center,
                       child: CircleAvatar(
                         radius: 100,
-                        backgroundColor: Colors.amber,
                         backgroundImage: Image.network(
                           // "https://avatars.akamai.steamstatic.com/54ebc5eecc532e7afed9498dde2132658cc1a65a_full.jpg",
                           user.profilePicture ?? "",
@@ -255,6 +250,136 @@ class _ProfileHomeState extends ConsumerState<ProfileHome> {
                     ),
                   )
                 ],
+              ),
+            ),
+            const SizedBox(height: 15),
+            Card(
+              elevation: 2,
+              child: Container(
+                height: 170,
+                child: Row(
+                  children: [
+                    Expanded(
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Icon(
+                            FontAwesomeIcons.squareSteam,
+                            size: 48,
+                            color: Theme.of(context).colorScheme.primary,
+                          ),
+                          Text(
+                            "360",
+                            style: TextStyle(
+                              fontSize: 40,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          Text(
+                            "Jogos na Steam",
+                            style: TextStyle(
+                              color: Colors.grey,
+                            ),
+                          )
+                        ],
+                      ),
+                    ),
+                    Container(
+                      height: 100,
+                      width: 0.5,
+                      color: Colors.grey,
+                    ),
+                    Expanded(
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Icon(
+                            Icons.timer,
+                            size: 48,
+                            color: Colors.cyan,
+                          ),
+                          Text(
+                            "3.450h",
+                            style: TextStyle(
+                              fontSize: 40,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          Text(
+                            "Horas Jogadas",
+                            style: TextStyle(
+                              color: Colors.grey,
+                            ),
+                          )
+                        ],
+                      ),
+                    ),
+                    Container(
+                      height: 100,
+                      width: 0.5,
+                      color: Colors.grey,
+                    ),
+                    Expanded(
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Icon(
+                            FontAwesomeIcons.dove,
+                            size: 48,
+                            color: Colors.orange,
+                          ),
+                          Text(
+                            "Aguia 2",
+                            style: TextStyle(
+                              fontSize: 40,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          Text(
+                            "CS GO",
+                            style: TextStyle(
+                              color: Colors.grey,
+                            ),
+                          )
+                        ],
+                      ),
+                    ),
+                    Container(
+                      height: 100,
+                      width: 0.5,
+                      color: Colors.grey,
+                    ),
+                    Expanded(
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Icon(
+                            FontAwesomeIcons.skull,
+                            size: 48,
+                            color: Colors.red,
+                          ),
+                          Text(
+                            "860",
+                            style: TextStyle(
+                              fontSize: 40,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          Text(
+                            "Tarkov Kills",
+                            style: TextStyle(
+                              color: Colors.grey,
+                            ),
+                          )
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
               ),
             ),
             const SizedBox(height: 20),
@@ -269,9 +394,9 @@ class _ProfileHomeState extends ConsumerState<ProfileHome> {
                   ),
                 ),
                 const SizedBox(width: 20),
-                Card(
+                const Card(
                   elevation: 2,
-                  child: Container(
+                  child: SizedBox(
                     height: 1000,
                     width: 300,
                   ),
@@ -283,7 +408,7 @@ class _ProfileHomeState extends ConsumerState<ProfileHome> {
       ),
       floatingActionButton: FloatingActionButton.extended(
           onPressed: () {},
-          label: Row(
+          label: const Row(
             children: [
               Icon(Icons.edit),
               SizedBox(width: 5),

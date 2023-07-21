@@ -8,9 +8,10 @@ import 'package:bitsdojo_window/bitsdojo_window.dart';
 import '/controllers/route_controller.dart';
 
 class MyWindowFrame extends ConsumerStatefulWidget {
-  MyWindowFrame({required this.child, super.key});
+  const MyWindowFrame({required this.child, required this.isLogin, super.key});
 
-  Widget child;
+  final Widget child;
+  final bool isLogin;
 
   @override
   ConsumerState<MyWindowFrame> createState() => _MyWindowFrameState();
@@ -53,80 +54,82 @@ class _MyWindowFrameState extends ConsumerState<MyWindowFrame> {
                   height: 40,
                   child: WindowTitleBarBox(
                     child: MoveWindow(
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          // Left
-                          Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 40),
-                            child: Row(
-                              mainAxisSize: MainAxisSize.min,
+                      child: widget.isLogin
+                          ? null
+                          : Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                const Text(
-                                  "DOLLARS",
-                                  style: TextStyle(
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.bold,
-                                    letterSpacing: 8,
-                                  ),
-                                ),
-                                const SizedBox(width: 30),
+                                // Left
+                                Padding(
+                                  padding: const EdgeInsets.symmetric(horizontal: 40),
+                                  child: Row(
+                                    mainAxisSize: MainAxisSize.min,
+                                    children: [
+                                      const Text(
+                                        "DOLLARS",
+                                        style: TextStyle(
+                                          fontSize: 16,
+                                          fontWeight: FontWeight.bold,
+                                          letterSpacing: 8,
+                                        ),
+                                      ),
+                                      const SizedBox(width: 30),
 
-                                //
-                                Row(
-                                  children: [
-                                    ...routeStack
-                                        .map(
-                                          (route) => Row(
-                                            children: [
-                                              Text(
-                                                route,
-                                                style: const TextStyle(
-                                                  fontSize: 12,
-                                                  height: 0.9,
+                                      //
+                                      Row(
+                                        children: [
+                                          ...routeStack
+                                              .map(
+                                                (route) => Row(
+                                                  children: [
+                                                    Text(
+                                                      route,
+                                                      style: const TextStyle(
+                                                        fontSize: 12,
+                                                        height: 0.9,
+                                                      ),
+                                                    ),
+                                                    const SizedBox(width: 5),
+                                                    const Icon(
+                                                      Icons.keyboard_arrow_right,
+                                                      size: 16,
+                                                    ),
+                                                    const SizedBox(width: 5),
+                                                  ],
                                                 ),
-                                              ),
-                                              const SizedBox(width: 5),
-                                              const Icon(
-                                                Icons.keyboard_arrow_right,
-                                                size: 16,
-                                              ),
-                                              const SizedBox(width: 5),
-                                            ],
-                                          ),
-                                        )
-                                        .toList()
-                                  ],
+                                              )
+                                              .toList()
+                                        ],
+                                      ),
+                                    ],
+                                  ),
                                 ),
-                              ],
-                            ),
-                          ),
 
-                          // Right
-                          Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 15),
-                            child: Row(
-                              mainAxisSize: MainAxisSize.min,
-                              children: [
-                                IconButton(
-                                  onPressed: () {},
-                                  icon: const Icon(
-                                    Icons.settings,
-                                    size: 18,
+                                // Right
+                                Padding(
+                                  padding: const EdgeInsets.symmetric(horizontal: 15),
+                                  child: Row(
+                                    mainAxisSize: MainAxisSize.min,
+                                    children: [
+                                      IconButton(
+                                        onPressed: () {},
+                                        icon: const Icon(
+                                          Icons.settings,
+                                          size: 18,
+                                        ),
+                                      ),
+                                      IconButton(
+                                        onPressed: () {},
+                                        icon: const Icon(
+                                          Icons.notifications,
+                                          size: 18,
+                                        ),
+                                      ),
+                                    ],
                                   ),
-                                ),
-                                IconButton(
-                                  onPressed: () {},
-                                  icon: const Icon(
-                                    Icons.notifications,
-                                    size: 18,
-                                  ),
-                                ),
+                                )
                               ],
                             ),
-                          )
-                        ],
-                      ),
                     ),
                   ),
                 ),
