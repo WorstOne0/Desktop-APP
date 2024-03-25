@@ -1,16 +1,8 @@
 // Flutter Packages
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:dio/dio.dart';
 // Services
-import '/services/dio_provider.dart';
-import '/services/secure_storage.dart';
-import '/services/hive_storage.dart';
-
-// My Controller are a mix between the Controller and Repository from the
-// Riverpod Architecture (https://codewithandrea.com/articles/flutter-app-architecture-riverpod-introduction/).
-// It handles the management of the widget state. (Riverpod Controller's job)
-// It handles the data parsing and serialilzation from api's. (Riverpod Repository's job).
+import '/services/storage/secure_storage.dart';
 
 enum NavBarRoutes { HOME, GAMES, ANIMES, GROUPS, PROFILE }
 
@@ -45,9 +37,7 @@ class RouteState {
 class RouteController extends StateNotifier<RouteState> {
   RouteController({
     required this.ref,
-    required this.dioProvider,
     required this.secureStorage,
-    required this.hiveStorage,
   }) : super(
           RouteState(
             navigatorKey: GlobalKey<NavigatorState>(),
@@ -57,11 +47,8 @@ class RouteController extends StateNotifier<RouteState> {
         );
 
   Ref ref;
-  // Dio
-  DioProvider dioProvider;
-  // Persist Data
+
   SecureStorage secureStorage;
-  HiveStorage hiveStorage;
 
   // NavBar Update Route Selected
   void changeNavBarRoute(NavBarRoutes? newRouteEnum) =>
@@ -100,8 +87,6 @@ class RouteController extends StateNotifier<RouteState> {
 final routeProvider = StateNotifierProvider<RouteController, RouteState>((ref) {
   return RouteController(
     ref: ref,
-    dioProvider: ref.watch(dioProvider),
     secureStorage: ref.watch(secureStorageProvider),
-    hiveStorage: ref.watch(hiveStorageProvider),
   );
 });

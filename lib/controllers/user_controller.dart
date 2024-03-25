@@ -2,47 +2,41 @@
 import 'dart:async';
 import 'dart:convert';
 // Flutter Packages
+import 'package:dollars/controllers/socket_io_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:dio/dio.dart';
 // Models
 import '/models/user/user.dart';
 // Services
-import '/services/dio_provider.dart';
-import '/services/secure_storage.dart';
-import '/services/hive_storage.dart';
-
-// My Controller are a mix between the Controller and Repository from the
-// Riverpod Architecture (https://codewithandrea.com/articles/flutter-app-architecture-riverpod-introduction/).
-// It handles the management of the widget state. (Riverpod Controller's job)
-// It handles the data parsing and serialilzation from api's. (Riverpod Repository's job).
+import '/services/storage/hive_storage.dart';
+import '/services/apis/api_provider.dart';
+import '/services/storage/secure_storage.dart';
+// Utils
+import '/utils/dio_error_formatter.dart';
 
 @immutable
 class UserState {
-  const UserState({
-    required this.user,
-  });
+  const UserState({required this.user});
 
   final User? user;
 
   UserState copyWith({User? user}) {
-    return UserState(
-      user: user ?? this.user,
-    );
+    return UserState(user: user ?? this.user);
   }
 }
 
 class UserController extends StateNotifier<UserState> {
-  UserController(
-      {required this.ref,
-      required this.dioProvider,
-      required this.secureStorage,
-      required this.hiveStorage})
-      : super(const UserState(user: null));
+  UserController({
+    required this.ref,
+    required this.apiProvider,
+    required this.secureStorage,
+    required this.hiveStorage,
+  }) : super(const UserState(user: null));
 
   Ref ref;
   // Dio
-  DioProvider dioProvider;
+  ApiProvider apiProvider;
   // Persist Data
   SecureStorage secureStorage;
   HiveStorage hiveStorage;
@@ -52,43 +46,53 @@ class UserController extends StateNotifier<UserState> {
     return false;
   }
 
-  Future<({bool success, String errorMessage})> login(Map<String, String> data) async {
+  Future<({bool success, String message})> login(Map<String, String> data) async {
     try {
-      // Get user, and authorization token
-      Response res = await dioProvider.dio.post(
-        "/login",
-        data: data,
-      );
+      Response res = await apiProvider.dio.post("/login", data: data);
 
       // Save the token, user and password
-      String accessToken = res.data["accessToken"];
-      secureStorage.saveString("accessToken", accessToken);
-
+      secureStorage.saveString("accessToken", res.data["payload"]["accessToken"]);
       secureStorage.saveString("email", data["email"] ?? "");
       secureStorage.saveString("password", data["password"] ?? "");
 
       // Create User
-      User myUser = User.fromJson(res.data);
-      state = state.copyWith(user: myUser);
+      User user = User.fromJson(res.data["payload"]["user"]);
+      // User myUser = User.fromJson({
+      //   "id": "0",
+      //   "email": "luccagabriel12@hotmail.com",
+      //   "userRole": "Super Admin",
+      //   "userName": "worstone0",
+      //   "screenName": "Worst One",
+      //   "profilePicture": "https://avatars.githubusercontent.com/u/31835808?v=4",
+      // });
+      state = state.copyWith(user: user);
 
       // Save User to Local Storage
-      secureStorage.saveString("user", jsonEncode(myUser.toJson()));
+      secureStorage.saveString("user", jsonEncode(user.toJson()));
 
-      return (success: true, errorMessage: "");
-    } on DioException {
-      return (success: false, errorMessage: "");
+      // Set User on Socket IO
+      ref.read(socketIOProvider.notifier).emitToBack("set_user", user.id);
+
+      return (success: true, message: "");
+    } on DioException catch (exception) {
+      return (success: false, message: dioErrorFormatter(exception));
     } catch (error) {
-      return (success: false, errorMessage: error.toString());
+      return (success: false, message: error.toString());
     }
   }
 
-  void logout() {}
+  void logout() {
+    secureStorage.deleteKey("accessToken");
+    secureStorage.deleteKey("user");
+    secureStorage.deleteKey("username");
+    secureStorage.deleteKey("password");
+  }
 }
 
 final userProvider = StateNotifierProvider<UserController, UserState>((ref) {
   return UserController(
     ref: ref,
-    dioProvider: ref.watch(dioProvider),
+    apiProvider: ref.watch(apiProvider),
     secureStorage: ref.watch(secureStorageProvider),
     hiveStorage: ref.watch(hiveStorageProvider),
   );

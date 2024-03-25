@@ -1,5 +1,3 @@
-// Dart
-import 'dart:io';
 // Flutter packages
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -7,15 +5,15 @@ import 'package:get/get.dart';
 import 'package:animated_theme_switcher/animated_theme_switcher.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-// Screens
-import '/screens/splash_screen.dart';
+// Controllers
+import '/controllers/socket_io_controller.dart';
+// Pages
+import '/pages/splash_screen.dart';
 // Services
-import '/services/secure_storage.dart';
+import '/services/storage/secure_storage.dart';
 import '/services/navigator_provider.dart';
 // Styles
 import '/styles/style_config.dart';
-// Utils
-// import '/utils/logger.dart';
 
 // Flutter Platform Channels - To make my own plugins
 // https://medium.com/flutter/flutter-platform-channels-ce7f540a104e
@@ -27,7 +25,6 @@ void main() async {
 
   // Initialize Hive
   await Hive.initFlutter();
-
   await Hive.openLazyBox("dollars_box");
 
   // *** RIVERPOD ***
@@ -35,8 +32,11 @@ void main() async {
 
   // Startup (https://codewithandrea.com/articles/riverpod-initialize-listener-app-startup/)
   // 1. Create a ProviderContainer
-  final container = ProviderContainer(observers: [/*Logger()*/]);
+  final container = ProviderContainer(observers: []);
   // 2. Use it to read the provider
+
+  // This starts the Socket IO listener
+  container.read(socketIOProvider.notifier).connectAndListen();
 
   // Dark Mode
   String? stringDarkMode = await container.read(secureStorageProvider).readString("dark_mode");

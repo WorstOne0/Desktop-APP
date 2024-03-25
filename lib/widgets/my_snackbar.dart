@@ -2,18 +2,29 @@
 
 // Flutter Packages
 import 'package:flutter/material.dart';
+// Utils
+import '/utils/string_extensions.dart';
 
-SnackBar mySnackBar(Color color, IconData icon, String text, {Duration? duration}) {
+SnackBar mySnackBar(
+  Color color,
+  IconData icon,
+  String text, {
+  // Only work well for 3 maxLines
+  int maxLines = 2,
+  Duration? duration,
+  SnackBarBehavior behavior = SnackBarBehavior.floating,
+}) {
+  //
   return SnackBar(
-    behavior: SnackBarBehavior.floating,
-    shape: RoundedRectangleBorder(
-      borderRadius: BorderRadius.circular(5),
-    ),
+    behavior: behavior,
+    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
     dismissDirection: DismissDirection.horizontal,
     duration: duration ?? const Duration(seconds: 2),
     padding: EdgeInsets.zero,
     content: SizedBox(
-      height: 55,
+      // Only work well for 3 maxLines.
+      // User another thing for text bigger than that
+      height: maxLines == 2 ? 60 : 75,
       child: Row(
         children: [
           Container(
@@ -27,18 +38,28 @@ SnackBar mySnackBar(Color color, IconData icon, String text, {Duration? duration
             ),
           ),
           const SizedBox(width: 15),
-          Row(
-            children: [
-              Icon(
-                icon,
-                color: color,
+          Expanded(
+            child: Padding(
+              padding: const EdgeInsets.symmetric(vertical: 5),
+              child: Row(
+                children: [
+                  Icon(
+                    icon,
+                    color: color,
+                  ),
+                  const SizedBox(width: 15),
+                  Expanded(
+                    child: Text(
+                      text.tight(),
+                      maxLines: maxLines,
+                      overflow: TextOverflow.ellipsis,
+                      style: const TextStyle(fontWeight: FontWeight.bold),
+                    ),
+                  ),
+                  const SizedBox(width: 15),
+                ],
               ),
-              const SizedBox(width: 15),
-              Text(
-                text,
-                style: const TextStyle(fontWeight: FontWeight.bold),
-              ),
-            ],
+            ),
           )
         ],
       ),
