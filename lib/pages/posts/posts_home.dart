@@ -1,4 +1,5 @@
 // Flutter Packages
+import 'package:dollars/controllers/socket_io_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -12,6 +13,8 @@ class PostsHome extends ConsumerStatefulWidget {
 class _PostsHomeState extends ConsumerState<PostsHome> {
   @override
   Widget build(BuildContext context) {
+    print(ref.read(socketIOProvider).message);
+
     return Scaffold(
       body: LayoutBuilder(
         builder: (context, constraints) => ListView(
