@@ -4,11 +4,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 // Screens
-import '../pages/posts/posts_home.dart';
-import '../pages/profile/profile_home.dart';
-import '../pages/animes/animes_home.dart';
-import '../pages/games/games_home.dart';
-import '../pages/groups/groups_home.dart';
+import '/pages/posts/posts_home.dart';
+import '/pages/profile/profile_home.dart';
+import '/pages/animes/animes_home.dart';
+import '/pages/games/games_home.dart';
+import '/pages/groups/groups_home.dart';
 // Controllers
 import '/controllers/route_controller.dart';
 import '/controllers/user_controller.dart';

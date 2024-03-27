@@ -21,10 +21,10 @@ class Login extends ConsumerStatefulWidget {
 }
 
 class _LoginState extends ConsumerState<Login> {
+  bool isLoading = true, isPasswordVisible = false;
+
   final _userController = TextEditingController();
   final _passwordController = TextEditingController();
-
-  bool isPasswordVisible = false;
 
   @override
   void initState() {
@@ -32,14 +32,33 @@ class _LoginState extends ConsumerState<Login> {
 
     // Window Controller
     ref.read(windowService).loginCallback();
+
+    checkIsLogged();
+  }
+
+  void checkIsLogged() async {
+    var isLogged = await ref.read(userProvider.notifier).isLogged();
+
+    print(isLogged);
+    if (isLogged.success) {
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(
+          builder: (context) => const WindowFramePage(),
+          settings: const RouteSettings(name: "window_frame_page.dart"),
+        ),
+      );
+    }
+
+    setState(() => isLoading = false);
   }
 
   void handleLogin() async {
+    if (isLoading) return;
+
+    setState(() => isLoading = true);
+
     var response = await ref.read(userProvider.notifier).login(
-      // {
-      //   "email": "luccagabriel12@hotmail.com",
-      //   "password": "nemteconto1",
-      // },
       {
         "email": _userController.text,
         "password": _passwordController.text,
@@ -61,7 +80,15 @@ class _LoginState extends ConsumerState<Login> {
     ScaffoldMessenger.of(context)
       ..hideCurrentSnackBar()
       ..showSnackBar(
-          mySnackBar(Colors.red, Icons.error, response.message, duration: Duration(seconds: 5)));
+        mySnackBar(
+          Colors.red,
+          Icons.error,
+          response.message,
+          duration: const Duration(seconds: 5),
+        ),
+      );
+
+    setState(() => isLoading = false);
   }
 
   @override
@@ -186,7 +213,13 @@ class _LoginState extends ConsumerState<Login> {
                               minWidth: double.infinity,
                               shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
                               color: Theme.of(context).colorScheme.primary,
-                              child: const Text("Login"),
+                              child: isLoading
+                                  ? const SizedBox(
+                                      height: 20,
+                                      width: 20,
+                                      child: CircularProgressIndicator(),
+                                    )
+                                  : const Text("Login"),
                             ),
                           ),
                         ],

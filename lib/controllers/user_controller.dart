@@ -41,11 +41,6 @@ class UserController extends StateNotifier<UserState> {
   SecureStorage secureStorage;
   HiveStorage hiveStorage;
 
-  // User Authentication
-  Future<bool> isLogged() async {
-    return false;
-  }
-
   Future<({bool success, String message})> login(Map<String, String> data) async {
     try {
       Response res = await apiProvider.dio.post("/login", data: data);
@@ -81,10 +76,71 @@ class UserController extends StateNotifier<UserState> {
     }
   }
 
+  // User Authentication
+  Future<({bool success, String message})> isLogged() async {
+    // It needs to be here, outside the try-catch block because if the token is not valid
+    // it generates a Dio Error (Conection Timed Out) and i can't get the result
+    var isTokenValid = await validateAuthorizationToken();
+
+    try {
+      // If the token is not valid, the user is not logged
+      if (!isTokenValid.success) return (success: false, message: "Token Invalid");
+
+      // If the token is valid, refresh token and user information
+      return await refreshInformation();
+    } on DioException catch (exception) {
+      return (success: false, message: dioErrorFormatter(exception));
+    } catch (error) {
+      return (success: false, message: error.toString());
+    }
+  }
+
+  Future<({bool success, String message})> validateAuthorizationToken() async {
+    try {
+      String? accessToken = await secureStorage.readString("accessToken");
+
+      // If there is no token stored, do the login
+      if (accessToken == null) return (success: false, message: "Not Auth Token");
+
+      // Check with the backend if the authorizationToken is valid
+      Response res = await apiProvider.dio.get("/user");
+
+      // If the token is not valid, do the login
+      if (res.data["status"] != 200) {
+        return (success: false, message: "Error Getting Session");
+      }
+
+      return (success: true, message: "");
+    } on DioException catch (exception) {
+      return (success: false, message: dioErrorFormatter(exception));
+    } catch (error) {
+      return (success: false, message: error.toString());
+    }
+  }
+
+  Future<({bool success, String message})> refreshInformation() async {
+    try {
+      // Retrive the user and password stored
+      String? email = await secureStorage.readString("email"),
+          password = await secureStorage.readString("password");
+
+      if (email == null || password == null) return (success: false, message: "Storage Error");
+
+      Map<String, String> data = {"email": email, "password": password};
+
+      // Try to do the login
+      return await login(data);
+    } on DioException catch (exception) {
+      return (success: false, message: dioErrorFormatter(exception));
+    } catch (error) {
+      return (success: false, message: error.toString());
+    }
+  }
+
   void logout() {
     secureStorage.deleteKey("accessToken");
     secureStorage.deleteKey("user");
-    secureStorage.deleteKey("username");
+    secureStorage.deleteKey("email");
     secureStorage.deleteKey("password");
   }
 }

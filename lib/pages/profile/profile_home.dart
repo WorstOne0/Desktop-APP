@@ -1,4 +1,6 @@
 // Flutter Packages
+import 'package:dollars/controllers/route_controller.dart';
+import 'package:dollars/pages/profile/profile_settings/profile_settings.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:dollars/controllers/user_controller.dart';
@@ -407,12 +409,23 @@ class _ProfileHomeState extends ConsumerState<ProfileHome> {
         ),
       ),
       floatingActionButton: FloatingActionButton.extended(
-          onPressed: () {},
+          onPressed: () {
+            // Change NavBar Route
+            ref.read(routeProvider).navigatorKey.currentState!.push(
+                  MaterialPageRoute(
+                    builder: (context) => const ProfileSettings(),
+                    settings: const RouteSettings(name: "profile_settings.dart"),
+                  ),
+                );
+
+            // Update NavBar Selected
+            ref.read(routeProvider.notifier).handleRouteStack("push", "Settings");
+          },
           label: const Row(
             children: [
-              Icon(Icons.edit),
+              Icon(Icons.settings),
               SizedBox(width: 5),
-              Text("Editar Perfil"),
+              Text("Configurações"),
             ],
           )),
     );
