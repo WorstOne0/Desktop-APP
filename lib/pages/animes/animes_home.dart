@@ -1,7 +1,9 @@
 // Flutter Packages
 import 'package:dollars/controllers/anime/anime_controller.dart';
-import 'package:dollars/models/anime/anime.dart';
+import 'package:dollars/models/anime/jikan_anime.dart';
+import 'package:dollars/models/anime/mal_anime.dart';
 import 'package:dollars/widgets/loading_shimmer.dart';
+import 'package:dollars/widgets/my_tab_bar.dart';
 import 'package:dollars/widgets/response_widget.dart';
 
 import 'package:flutter/material.dart';
@@ -18,24 +20,34 @@ class AnimesHome extends ConsumerStatefulWidget {
   ConsumerState<AnimesHome> createState() => _AnimesHomeState();
 }
 
-class _AnimesHomeState extends ConsumerState<AnimesHome> {
+class _AnimesHomeState extends ConsumerState<AnimesHome> with SingleTickerProviderStateMixin {
   bool isLoading = true, isSuccess = false;
   late ({bool success, String message}) response;
 
-  ScrollController _scrollController = ScrollController();
+  // Tabs
+  late TabController _tabController;
+  int currentTab = 0;
+  //
+  final _scrollController = ScrollController();
 
-  final NumberPaginatorController _controller = NumberPaginatorController();
   int currentPage = 1, maxPages = 1;
 
   @override
   void initState() {
     super.initState();
 
+    _tabController = TabController(length: 3, vsync: this);
+    _tabController.addListener(
+      () => setState(() {
+        currentTab = _tabController.index;
+      }),
+    );
+
     asyncInit();
   }
 
   void asyncInit() async {
-    response = await ref.read(animeProvider.notifier).getAnimeList();
+    response = await ref.read(animeProvider.notifier).getUserAnimeList();
     maxPages = ref.read(animeProvider.notifier).maxPages;
 
     setState(() {
@@ -62,7 +74,7 @@ class _AnimesHomeState extends ConsumerState<AnimesHome> {
     });
   }
 
-  Widget buildAnimeCard(Anime anime) {
+  Widget buildAnimeCard(MALAnime anime) {
     return Container(
       foregroundDecoration: anime.rank < 1000
           ? RotatedCornerDecoration.withColor(
@@ -216,9 +228,9 @@ class _AnimesHomeState extends ConsumerState<AnimesHome> {
   Widget build(BuildContext context) {
     ref.watch(animeProvider);
 
-    int crossAxisCount = MediaQuery.of(context).size.width ~/ 350;
+    int crossAxisCount = MediaQuery.of(context).size.width ~/ 280;
 
-    List<Anime> animeList = ref.read(animeProvider).animeList;
+    List<MALAnime> malAnimeList = ref.read(animeProvider).malAnimeList;
 
     return Scaffold(
       body: LayoutBuilder(
@@ -250,14 +262,24 @@ class _AnimesHomeState extends ConsumerState<AnimesHome> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      const Padding(
-                        padding: EdgeInsets.symmetric(horizontal: 15),
-                        child: Text(
-                          "Anime List",
-                          style: TextStyle(
-                            color: Colors.grey,
-                            fontSize: 24,
-                            fontWeight: FontWeight.bold,
+                      SizedBox(
+                        width: 800,
+                        child: Card(
+                          elevation: 2,
+                          child: MyTabBar(
+                            items: const [
+                              (icon: Icons.person, text: "Sua Lista"),
+                              (icon: Icons.security, text: "Airing"),
+                              (icon: Icons.abc, text: "All Anime")
+                            ],
+                            indexSelected: currentTab,
+                            showIcons: false,
+                            onTap: (value) {
+                              currentTab = value;
+
+                              setState(() {});
+                              _tabController.animateTo(value);
+                            },
                           ),
                         ),
                       ),
@@ -285,7 +307,7 @@ class _AnimesHomeState extends ConsumerState<AnimesHome> {
                                     )
                                   : GridView.builder(
                                       shrinkWrap: true,
-                                      itemCount: animeList.length,
+                                      itemCount: malAnimeList.length,
                                       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                                         crossAxisCount: crossAxisCount,
                                         mainAxisSpacing: 15,
@@ -293,7 +315,7 @@ class _AnimesHomeState extends ConsumerState<AnimesHome> {
                                         childAspectRatio: 0.6,
                                       ),
                                       itemBuilder: (context, index) =>
-                                          buildAnimeCard(animeList[index]),
+                                          buildAnimeCard(malAnimeList[index]),
                                     ),
                         ),
                       ),

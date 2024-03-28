@@ -1,4 +1,4 @@
-class Anime {
+class JikanAnime {
   late int malId;
   late String malUrl;
 
@@ -32,7 +32,7 @@ class Anime {
   late List<String> genres;
   late List<String> themes;
 
-  Anime.fromJson(dynamic json) {
+  JikanAnime.fromJson(dynamic json) {
     malId = json["mal_id"];
     malUrl = json["url"];
 
