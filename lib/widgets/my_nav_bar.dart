@@ -10,10 +10,10 @@ import '/pages/animes/animes_home.dart';
 import '/pages/games/games_home.dart';
 import '/pages/groups/groups_home.dart';
 // Controllers
-import '/controllers/route_controller.dart';
-import '/controllers/user_controller.dart';
+import '../controllers/core/route_controller.dart';
+import '../controllers/core/user_controller.dart';
 // Models
-import '/models/user/user.dart';
+import '../models/core/user/user.dart';
 
 class MyNavBar extends ConsumerStatefulWidget {
   const MyNavBar({super.key});

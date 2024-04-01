@@ -5,7 +5,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 // Screens
 import 'posts/posts_home.dart';
 // Controllers
-import '/controllers/route_controller.dart';
+import '../controllers/core/route_controller.dart';
 // Widgets
 import '/widgets/my_nav_bar.dart';
 import '/widgets/my_window_frame.dart';

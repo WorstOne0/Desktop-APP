@@ -8,7 +8,7 @@ import 'package:animated_theme_switcher/animated_theme_switcher.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 // Controllers
-import '/controllers/socket_io_controller.dart';
+import 'controllers/core/socket_io_controller.dart';
 // Pages
 import '/pages/splash_screen.dart';
 // Services

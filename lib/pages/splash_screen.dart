@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:lottie/lottie.dart';
 // Screens
-import 'login.dart';
+import 'auth/login.dart';
 // Controllers
 
 class SplashScreen extends ConsumerStatefulWidget {

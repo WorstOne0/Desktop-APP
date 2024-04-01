@@ -1,10 +1,10 @@
 // Flutter Packages
-import 'package:dollars/controllers/route_controller.dart';
+import 'package:dollars/controllers/core/route_controller.dart';
 import 'package:dollars/pages/profile/profile_settings/profile_settings.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:dollars/controllers/user_controller.dart';
-import 'package:dollars/models/user/user.dart';
+import 'package:dollars/controllers/core/user_controller.dart';
+import 'package:dollars/models/core/user/user.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class ProfileHome extends ConsumerStatefulWidget {

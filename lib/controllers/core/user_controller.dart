@@ -2,12 +2,12 @@
 import 'dart:async';
 import 'dart:convert';
 // Flutter Packages
-import 'package:dollars/controllers/socket_io_controller.dart';
+import 'package:dollars/controllers/core/socket_io_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:dio/dio.dart';
 // Models
-import '/models/user/user.dart';
+import '../../models/core/user/user.dart';
 // Services
 import '/services/storage/hive_storage.dart';
 import '/services/apis/api_provider.dart';
@@ -35,9 +35,9 @@ class UserController extends StateNotifier<UserState> {
   }) : super(const UserState(user: null));
 
   Ref ref;
-  // Dio
+
   ApiProvider apiProvider;
-  // Persist Data
+
   SecureStorage secureStorage;
   HiveStorage hiveStorage;
 
@@ -46,9 +46,9 @@ class UserController extends StateNotifier<UserState> {
       Response res = await apiProvider.dio.post("/login", data: data);
 
       // Save the token, user and password
-      secureStorage.saveString("accessToken", res.data["payload"]["accessToken"]);
-      secureStorage.saveString("email", data["email"] ?? "");
-      secureStorage.saveString("password", data["password"] ?? "");
+      await secureStorage.saveString("accessToken", res.data["payload"]["accessToken"]);
+      await secureStorage.saveString("email", data["email"] ?? "");
+      await secureStorage.saveString("password", data["password"] ?? "");
 
       // Create User
       User user = User.fromJson(res.data["payload"]["user"]);
@@ -81,6 +81,7 @@ class UserController extends StateNotifier<UserState> {
     // It needs to be here, outside the try-catch block because if the token is not valid
     // it generates a Dio Error (Conection Timed Out) and i can't get the result
     var isTokenValid = await validateAuthorizationToken();
+    print(isTokenValid);
 
     try {
       // If the token is not valid, the user is not logged
@@ -142,6 +143,21 @@ class UserController extends StateNotifier<UserState> {
     secureStorage.deleteKey("user");
     secureStorage.deleteKey("email");
     secureStorage.deleteKey("password");
+  }
+
+  Future<({bool success, String message})> getProfile() async {
+    try {
+      Response res = await apiProvider.dio.get("/user");
+
+      if (res.data["status"] != 200) return (success: false, message: "Error Getting Session");
+
+      return (success: true, message: "");
+    } on DioException catch (exception) {
+      print(dioErrorFormatter(exception));
+      return (success: false, message: dioErrorFormatter(exception));
+    } catch (error) {
+      return (success: false, message: error.toString());
+    }
   }
 }
 

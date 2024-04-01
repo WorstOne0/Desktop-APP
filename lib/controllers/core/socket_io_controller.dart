@@ -1,7 +1,7 @@
 // ignore_for_file: constant_identifier_names
 
 // Flutter Packages
-import 'package:dollars/models/user/user.dart';
+import 'package:dollars/models/core/user/user.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:get/get.dart';

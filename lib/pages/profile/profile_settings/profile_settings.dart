@@ -1,5 +1,6 @@
 // Flutter Packages
-import 'package:dollars/controllers/route_controller.dart';
+import 'package:dollars/controllers/core/route_controller.dart';
+import 'package:dollars/pages/profile/profile_settings/link_account/link_account.dart';
 import 'package:dollars/widgets/my_tab_bar.dart';
 
 import 'package:flutter/material.dart';
@@ -58,7 +59,7 @@ class _ProfileSettingsState extends ConsumerState<ProfileSettings>
                         items: const [
                           (icon: Icons.person, text: "Perfil"),
                           (icon: Icons.security, text: "Segurança"),
-                          (icon: Icons.abc, text: "Integrações")
+                          (icon: Icons.link, text: "Conexões")
                         ],
                         indexSelected: currentTab,
                         onTap: (value) {
@@ -78,7 +79,16 @@ class _ProfileSettingsState extends ConsumerState<ProfileSettings>
 
                           ref.read(routeProvider.notifier).handleRouteStack("pop", "");
                         },
-                        icon: Icon(Icons.close),
+                        icon: Row(
+                          children: [
+                            Text(
+                              "Fechar",
+                              style: TextStyle(fontWeight: FontWeight.bold),
+                            ),
+                            SizedBox(width: 10),
+                            Icon(Icons.close),
+                          ],
+                        ),
                       ),
                       SizedBox(
                         width: 50,
@@ -88,19 +98,12 @@ class _ProfileSettingsState extends ConsumerState<ProfileSettings>
                 ],
               ),
               Expanded(
-                child: Card(
-                    elevation: 2,
-                    child: Column(
-                      children: [
-                        Center(),
-                        switch (currentTab) {
-                          0 => Text("Perfil"),
-                          1 => Text("Segurança"),
-                          2 => Text("Integrações"),
-                          _ => Text("Perfil")
-                        }
-                      ],
-                    )),
+                child: switch (currentTab) {
+                  0 => Text("Perfil"),
+                  1 => Text("Segurança"),
+                  2 => LinkAccount(),
+                  _ => Text("")
+                },
               )
             ],
           ),

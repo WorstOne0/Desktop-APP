@@ -4,9 +4,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 // Screens
-import 'window_frame_page.dart';
+import '../window_frame_page.dart';
 // Controllers
-import '/controllers/user_controller.dart';
+import '../../controllers/core/user_controller.dart';
 // Service
 import '/services/window_service.dart';
 // Widgets

@@ -9,13 +9,12 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 class SecureStorage {
   final storage = const FlutterSecureStorage(
-    aOptions: AndroidOptions(encryptedSharedPreferences: true),
-    iOptions: IOSOptions(accessibility: KeychainAccessibility.first_unlock),
+    wOptions: WindowsOptions(useBackwardCompatibility: false),
   );
 
-  bool saveString(String key, String value) {
+  Future<bool> saveString(String key, String value) async {
     try {
-      storage.write(key: key, value: value);
+      await storage.write(key: key, value: value);
 
       return true;
     } catch (error) {
