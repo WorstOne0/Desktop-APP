@@ -1,15 +1,17 @@
 // Dart
 import 'dart:async';
 // Flutter Packages
-import 'package:dollars/models/anime/jikan_anime.dart';
-import 'package:dollars/models/anime/mal_anime.dart';
-import 'package:dollars/services/apis/mal_api_provider.dart';
-import 'package:dollars/utils/dio_error_formatter.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:dio/dio.dart';
+// Models
+import '/models/anime/jikan_anime.dart';
+import '/models/anime/mal_anime.dart';
 // Services
-import 'package:dollars/services/apis/jikan_api_provider.dart';
+import '/services/apis/mal_api_provider.dart';
+import '/services/apis/jikan_api_provider.dart';
+// Utils
+import '/utils/dio_error_formatter.dart';
 
 @immutable
 class AnimeState {
@@ -50,9 +52,6 @@ class AnimeController extends StateNotifier<AnimeState> {
   Future<({bool success, String message})> getAnimeList({int? page}) async {
     try {
       Response res = await jikanApiProvider.dio.get("/anime?page=${page ?? 1}");
-      Response res2 = await malApiProvider.dio.get(
-        "/users/Worst_One0/animelist?limit=25&fields=${malAllFields["animeFull"].join(",")}",
-      );
 
       if (res.statusCode != 200) return (success: false, message: "Erro");
 

@@ -1,17 +1,16 @@
 // Flutter Packages
-import 'package:dollars/controllers/anime/anime_controller.dart';
-import 'package:dollars/models/anime/jikan_anime.dart';
-import 'package:dollars/models/anime/mal_anime.dart';
-import 'package:dollars/widgets/loading_shimmer.dart';
-import 'package:dollars/widgets/my_tab_bar.dart';
-import 'package:dollars/widgets/response_widget.dart';
-
 import 'package:flutter/material.dart';
-
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:number_paginator/number_paginator.dart';
 import 'package:rotated_corner_decoration/rotated_corner_decoration.dart';
+// Controllers
+import '/controllers/anime/anime_controller.dart';
+// Models
+import '/models/anime/mal_anime.dart';
+// Widgets
+import '/widgets/response_widget.dart';
+import '/widgets/loading_shimmer.dart';
+import '/widgets/my_tab_bar.dart';
 
 class AnimesHome extends ConsumerStatefulWidget {
   const AnimesHome({super.key});

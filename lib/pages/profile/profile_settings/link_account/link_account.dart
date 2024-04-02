@@ -1,18 +1,17 @@
 // ignore_for_file: use_build_context_synchronously
 
 // Flutter Packages
-
-import 'package:dollars/controllers/games/steam_controller.dart';
-import 'package:dollars/pages/profile/profile_settings/link_account/link_dialog_connect.dart';
-import 'package:dollars/utils/context_extensions.dart';
-import 'package:dollars/widgets/loading_shimmer.dart';
 import 'package:flutter/material.dart';
-
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:dollars/controllers/core/route_controller.dart';
-import 'package:dollars/widgets/my_tab_bar.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:url_launcher/url_launcher.dart';
+// Controllers
+import '/controllers/games/steam_controller.dart';
+// Pages
+import '/pages/profile/profile_settings/link_account/link_dialog_connect.dart';
+// Widgets
+import '/widgets/loading_shimmer.dart';
+// Utils
+import '/utils/context_extensions.dart';
 
 enum LinkAccountTypes { steam, myAnimeList, github }
 
@@ -188,13 +187,13 @@ class _LinkAccountState extends ConsumerState<LinkAccount> {
                     ? Column(
                         children: [
                           rectLoadingCard(120),
-                          SizedBox(height: 15),
+                          const SizedBox(height: 15),
                           rectLoadingCard(120),
-                          SizedBox(height: 15),
+                          const SizedBox(height: 15),
                           rectLoadingCard(120),
-                          SizedBox(height: 15),
+                          const SizedBox(height: 15),
                           rectLoadingCard(120),
-                          SizedBox(height: 15),
+                          const SizedBox(height: 15),
                         ],
                       )
                     : Expanded(

@@ -1,17 +1,19 @@
 // Dart
 import 'dart:async';
 // Flutter Packages
-import 'package:dollars/controllers/core/user_controller.dart';
-import 'package:dollars/models/games/steam_account_link.dart';
-import 'package:dollars/services/apis/api_provider.dart';
-import 'package:dollars/utils/dio_error_formatter.dart';
-import 'package:dotenv/dotenv.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:dio/dio.dart';
-import 'package:url_launcher/url_launcher.dart';
+import 'package:dotenv/dotenv.dart';
+// Controllers
+import '/controllers/core/user_controller.dart';
+// Models
+import '/models/games/steam_account_link.dart';
 // Services
+import '/services/apis/api_provider.dart';
 import '/services/apis/steam_api_provider.dart';
+// Utils
+import '/utils/dio_error_formatter.dart';
 
 @immutable
 class SteamState {
@@ -83,7 +85,6 @@ class SteamController extends StateNotifier<SteamState> {
 
       if (res.data["status"] != 200) return (success: false, message: "Erro");
 
-      print(res.data["payload"]);
       state = state.copyWith(steamAccountLink: SteamAccountLink.fromJson(res.data["payload"]));
 
       return (success: true, message: "");

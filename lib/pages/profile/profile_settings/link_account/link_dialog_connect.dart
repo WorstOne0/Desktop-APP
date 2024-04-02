@@ -1,18 +1,18 @@
 // ignore_for_file: use_build_context_synchronously
 
 // Flutter Packages
-
-import 'package:dollars/controllers/games/steam_controller.dart';
-import 'package:dollars/pages/profile/profile_settings/link_account/link_account.dart';
-import 'package:dollars/utils/context_extensions.dart';
-import 'package:dollars/widgets/response_widget.dart';
 import 'package:flutter/material.dart';
-
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:dollars/controllers/core/route_controller.dart';
-import 'package:dollars/widgets/my_tab_bar.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:url_launcher/url_launcher.dart';
+// Controllers
+import '/controllers/games/steam_controller.dart';
+// Pages
+import '/pages/profile/profile_settings/link_account/link_account.dart';
+// Widgets
+import '/widgets/response_widget.dart';
+// Utils
+import '/utils/context_extensions.dart';
 
 class LinkDialogConnect extends ConsumerStatefulWidget {
   const LinkDialogConnect({super.key, required this.accountType});
@@ -114,30 +114,30 @@ class _LinkDialogConnectState extends ConsumerState<LinkDialogConnect> {
                     handleConnectLogo(),
                     Container(
                       padding: const EdgeInsets.all(5),
-                      margin: EdgeInsets.symmetric(horizontal: 20),
+                      margin: const EdgeInsets.symmetric(horizontal: 20),
                       decoration: BoxDecoration(
                         color: Colors.green,
                         borderRadius: BorderRadius.circular(50),
                       ),
-                      child: Icon(
+                      child: const Icon(
                         Icons.link,
                         size: 18,
                       ),
                     ),
-                    Icon(FontAwesomeIcons.dev, size: 60)
+                    const Icon(FontAwesomeIcons.dev, size: 60)
                   ],
                 ),
-                SizedBox(height: 20),
+                const SizedBox(height: 20),
                 handleConnectTitle(),
-                SizedBox(height: 10),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 50),
+                const SizedBox(height: 10),
+                const Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 50),
                   child: Text(
                     "Será aberto uma nova guia para ser realizado o login, OAuth2.0 e etc e talz",
                     textAlign: TextAlign.center,
                   ),
                 ),
-                SizedBox(height: 40),
+                const SizedBox(height: 40),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
@@ -145,18 +145,18 @@ class _LinkDialogConnectState extends ConsumerState<LinkDialogConnect> {
                       onPressed: () => Navigator.pop(context),
                       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
                       color: Colors.grey,
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 20),
+                      child: const Padding(
+                        padding: EdgeInsets.symmetric(vertical: 12, horizontal: 20),
                         child: Text("Cancelar"),
                       ),
                     ),
-                    SizedBox(width: 30),
+                    const SizedBox(width: 30),
                     MaterialButton(
                       onPressed: handleConnect,
                       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
                       color: context.colorScheme.primary,
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 20),
+                      child: const Padding(
+                        padding: EdgeInsets.symmetric(vertical: 12, horizontal: 20),
                         child: Text("Autorizar"),
                       ),
                     )
@@ -190,7 +190,7 @@ class _LinkDialogConnectState extends ConsumerState<LinkDialogConnect> {
                         subtitle: connectResponse.message,
                       ),
                     )
-                  : Column(
+                  : const Column(
                       children: [
                         Icon(Icons.timer),
                         Text(
