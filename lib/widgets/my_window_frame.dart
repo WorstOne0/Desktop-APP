@@ -45,100 +45,101 @@ class _MyWindowFrameState extends ConsumerState<MyWindowFrame> {
     return WindowBorder(
       width: 0,
       color: Colors.transparent,
-      child: Column(
-        children: [
-          Row(
-            children: [
-              Expanded(
-                child: SizedBox(
-                  height: 40,
-                  child: WindowTitleBarBox(
-                    child: MoveWindow(
-                      child: widget.isLogin
-                          ? null
-                          : Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                // Left
-                                Padding(
-                                  padding: const EdgeInsets.symmetric(horizontal: 40),
-                                  child: Row(
-                                    mainAxisSize: MainAxisSize.min,
-                                    children: [
-                                      const Text(
-                                        "DOLLARS",
-                                        style: TextStyle(
-                                          fontSize: 16,
-                                          fontWeight: FontWeight.bold,
-                                          letterSpacing: 8,
+      child: Container(
+        color: widget.isLogin ? const Color(0xFF161716) : null,
+        child: Column(
+          children: [
+            Row(
+              children: [
+                Expanded(
+                  child: SizedBox(
+                    height: 40,
+                    child: WindowTitleBarBox(
+                      child: MoveWindow(
+                        child: widget.isLogin
+                            ? null
+                            : Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                children: [
+                                  // Left
+                                  Padding(
+                                    padding: const EdgeInsets.symmetric(horizontal: 40),
+                                    child: Row(
+                                      mainAxisSize: MainAxisSize.min,
+                                      children: [
+                                        const Text(
+                                          "DOLLARS",
+                                          style: TextStyle(
+                                            fontSize: 16,
+                                            fontWeight: FontWeight.bold,
+                                            letterSpacing: 8,
+                                          ),
                                         ),
-                                      ),
-                                      const SizedBox(width: 30),
+                                        const SizedBox(width: 30),
 
-                                      //
-                                      Row(
-                                        children: [
-                                          ...routeStack
-                                              .map(
-                                                (route) => Row(
-                                                  children: [
-                                                    Text(
-                                                      route,
-                                                      style: const TextStyle(
-                                                        fontSize: 12,
-                                                        height: 0.9,
-                                                      ),
+                                        //
+                                        Row(
+                                          children: [
+                                            ...routeStack.map(
+                                              (route) => Row(
+                                                children: [
+                                                  Text(
+                                                    route,
+                                                    style: const TextStyle(
+                                                      fontSize: 12,
+                                                      height: 0.9,
                                                     ),
-                                                    const SizedBox(width: 5),
-                                                    const Icon(
-                                                      Icons.keyboard_arrow_right,
-                                                      size: 16,
-                                                    ),
-                                                    const SizedBox(width: 5),
-                                                  ],
-                                                ),
-                                              )
-                                              .toList()
-                                        ],
-                                      ),
-                                    ],
+                                                  ),
+                                                  const SizedBox(width: 5),
+                                                  const Icon(
+                                                    Icons.keyboard_arrow_right,
+                                                    size: 16,
+                                                  ),
+                                                  const SizedBox(width: 5),
+                                                ],
+                                              ),
+                                            )
+                                          ],
+                                        ),
+                                      ],
+                                    ),
                                   ),
-                                ),
 
-                                // Right
-                                Padding(
-                                  padding: const EdgeInsets.symmetric(horizontal: 15),
-                                  child: Row(
-                                    mainAxisSize: MainAxisSize.min,
-                                    children: [
-                                      IconButton(
-                                        onPressed: () {},
-                                        icon: const Icon(
-                                          Icons.settings,
-                                          size: 18,
+                                  // Right
+                                  Padding(
+                                    padding: const EdgeInsets.symmetric(horizontal: 15),
+                                    child: Row(
+                                      mainAxisSize: MainAxisSize.min,
+                                      children: [
+                                        IconButton(
+                                          onPressed: () {},
+                                          icon: const Icon(
+                                            Icons.settings,
+                                            size: 18,
+                                          ),
                                         ),
-                                      ),
-                                      IconButton(
-                                        onPressed: () {},
-                                        icon: const Icon(
-                                          Icons.notifications,
-                                          size: 18,
+                                        IconButton(
+                                          onPressed: () {},
+                                          icon: const Icon(
+                                            Icons.notifications,
+                                            size: 18,
+                                          ),
                                         ),
-                                      ),
-                                    ],
-                                  ),
-                                )
-                              ],
-                            ),
+                                      ],
+                                    ),
+                                  )
+                                ],
+                              ),
+                      ),
                     ),
                   ),
                 ),
-              ),
-              buildWindowButtons(Theme.of(context).colorScheme)
-            ],
-          ),
-          Expanded(child: widget.child),
-        ],
+                buildWindowButtons(Theme.of(context).colorScheme)
+              ],
+            ),
+            Expanded(child: widget.child),
+          ],
+        ),
       ),
     );
   }

@@ -53,6 +53,7 @@ class _LinkAccountState extends ConsumerState<LinkAccount> {
     showDialog(
       context: context,
       builder: (context) => Dialog(
+        backgroundColor: Colors.transparent,
         child: LinkDialogConnect(accountType: accountType),
       ),
     );

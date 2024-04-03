@@ -2,7 +2,9 @@
 
 // Flutter Packages
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 // Screens
 import '../window_frame_page.dart';
 // Controllers
@@ -39,7 +41,6 @@ class _LoginState extends ConsumerState<Login> {
   void checkIsLogged() async {
     var isLogged = await ref.read(userProvider.notifier).isLogged();
 
-    print(isLogged);
     if (isLogged.success) {
       Navigator.pushReplacement(
         context,
@@ -115,9 +116,10 @@ class _LoginState extends ConsumerState<Login> {
                         children: [
                           Row(
                             children: [
-                              const Icon(
-                                Icons.logo_dev,
-                                size: 60,
+                              SvgPicture.asset(
+                                "assets/images/svg_logo_white.svg",
+                                height: 80,
+                                width: 80,
                               ),
                               Container(
                                 padding: const EdgeInsets.only(bottom: 5),

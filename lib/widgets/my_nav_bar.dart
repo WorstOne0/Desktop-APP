@@ -143,7 +143,7 @@ class _MyNavBarState extends ConsumerState<MyNavBar> {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        const Icon(Icons.bookmark_add),
+                        const Icon(Icons.live_tv),
                         if (_isNavBarOpen) const SizedBox(width: 10),
                         if (_isNavBarOpen) const Text("Anime"),
                       ],
