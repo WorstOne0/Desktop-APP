@@ -2,6 +2,7 @@
 
 // Flutter Packages
 
+import 'package:dollars/controllers/anime/anime_controller.dart';
 import 'package:flutter/material.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -53,10 +54,7 @@ class _LinkDialogConnectState extends ConsumerState<LinkDialogConnect>
           success: false,
           message: "Não foi implementado ainda cara. Da um tempo pra nois aew"
         ),
-      LinkAccountTypes.myAnimeList => (
-          success: false,
-          message: "Não foi implementado ainda cara. Da um tempo pra nois aew"
-        ),
+      LinkAccountTypes.myAnimeList => await ref.read(animeProvider.notifier).linkMALAccount(),
     };
 
     switch (widget.accountType) {
@@ -77,9 +75,11 @@ class _LinkDialogConnectState extends ConsumerState<LinkDialogConnect>
 
         break;
       case LinkAccountTypes.myAnimeList:
-        response as ({String message, bool success});
+        response as ({String message, String redirectUrl, bool success});
 
-        connectResponse = response;
+        launchUrl(Uri.parse(response.redirectUrl));
+
+        connectResponse = (success: response.success, message: response.message);
         setState(() => isLoading = false);
 
         break;

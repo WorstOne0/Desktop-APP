@@ -1,6 +1,7 @@
 // Dart
 import 'dart:async';
 // Flutter Packages
+import 'package:dollars/services/apis/api_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:dio/dio.dart';
@@ -39,15 +40,68 @@ class AnimeState {
 }
 
 class AnimeController extends StateNotifier<AnimeState> {
-  AnimeController({required this.ref, required this.jikanApiProvider, required this.malApiProvider})
-      : super(const AnimeState(animeList: [], animeSelected: null, malAnimeList: []));
+  AnimeController({
+    required this.ref,
+    required this.apiProvider,
+    required this.jikanApiProvider,
+    required this.malApiProvider,
+  }) : super(const AnimeState(animeList: [], animeSelected: null, malAnimeList: []));
 
   Ref ref;
 
+  ApiProvider apiProvider;
   JikanApiProvider jikanApiProvider;
   MALApiProvider malApiProvider;
 
   int maxPages = 1;
+
+  Future<({String redirectUrl, bool success, String message})> linkMALAccount() async {
+    try {
+      Response res = await apiProvider.dio.get("/anime/link_mal_account");
+
+      if (res.data["status"] != 200) return (redirectUrl: "", success: false, message: "Erro");
+
+      String redirectUrl = res.data["payload"];
+
+      return (redirectUrl: redirectUrl, success: true, message: "");
+    } on DioException catch (exception) {
+      return (redirectUrl: "", success: false, message: dioErrorFormatter(exception));
+    } catch (error) {
+      return (redirectUrl: "", success: false, message: error.toString());
+    }
+  }
+
+  Future<({bool success, String message})> unlinkMALAccount() async {
+    try {
+      // Response res = await apiProvider.dio.delete("/anime/unlink_mal_account");
+
+      // if (res.data["status"] != 200) return (success: false, message: "Erro");
+
+      // state = state.nullableCopyWith(steamAccountLink: () => null);
+
+      return (success: true, message: "");
+    } on DioException catch (exception) {
+      return (success: false, message: dioErrorFormatter(exception));
+    } catch (error) {
+      return (success: false, message: error.toString());
+    }
+  }
+
+  Future<({bool success, String message})> getMALAccount() async {
+    try {
+      Response res = await apiProvider.dio.get("/anime/get_mal_account");
+
+      if (res.data["status"] != 200) return (success: false, message: "Erro");
+
+      // state = state.copyWith(steamAccountLink: SteamAccountLink.fromJson(res.data["payload"]));
+
+      return (success: true, message: "");
+    } on DioException catch (exception) {
+      return (success: false, message: dioErrorFormatter(exception));
+    } catch (error) {
+      return (success: false, message: error.toString());
+    }
+  }
 
   Future<({bool success, String message})> getAnimeList({int? page}) async {
     try {
@@ -99,6 +153,7 @@ class AnimeController extends StateNotifier<AnimeState> {
 final animeProvider = StateNotifierProvider<AnimeController, AnimeState>((ref) {
   return AnimeController(
     ref: ref,
+    apiProvider: ref.watch(apiProvider),
     jikanApiProvider: ref.watch(jikanApiProvider),
     malApiProvider: ref.watch(malApiProvider),
   );
