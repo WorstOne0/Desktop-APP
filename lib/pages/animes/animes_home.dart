@@ -227,8 +227,6 @@ class _AnimesHomeState extends ConsumerState<AnimesHome> with SingleTickerProvid
   Widget build(BuildContext context) {
     ref.watch(animeProvider);
 
-    int crossAxisCount = MediaQuery.of(context).size.width ~/ 280;
-
     List<MALAnime> malAnimeList = ref.read(animeProvider).malAnimeList;
 
     return Scaffold(
@@ -308,13 +306,14 @@ class _AnimesHomeState extends ConsumerState<AnimesHome> with SingleTickerProvid
                                       shrinkWrap: true,
                                       itemCount: malAnimeList.length,
                                       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                                        crossAxisCount: crossAxisCount,
+                                        crossAxisCount: MediaQuery.of(context).size.width ~/ 280,
                                         mainAxisSpacing: 15,
                                         crossAxisSpacing: 15,
                                         childAspectRatio: 0.6,
                                       ),
-                                      itemBuilder: (context, index) =>
-                                          buildAnimeCard(malAnimeList[index]),
+                                      itemBuilder: (context, index) => buildAnimeCard(
+                                        malAnimeList[index],
+                                      ),
                                     ),
                         ),
                       ),

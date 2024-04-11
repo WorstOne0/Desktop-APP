@@ -1,10 +1,7 @@
 // ignore_for_file: use_build_context_synchronously
 
 // Flutter Packages
-
-import 'package:dollars/controllers/anime/anime_controller.dart';
 import 'package:flutter/material.dart';
-
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -12,6 +9,7 @@ import 'package:lottie/lottie.dart';
 import 'package:url_launcher/url_launcher.dart';
 // Controllers
 import '/controllers/games/steam_controller.dart';
+import '/controllers/anime/anime_controller.dart';
 // Pages
 import '/pages/profile/profile_settings/link_account/link_account.dart';
 // Widgets

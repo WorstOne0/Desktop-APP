@@ -1,6 +1,7 @@
 // Dart
 import 'dart:async';
 // Flutter Packages
+import 'package:dollars/models/games/steam_game.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:dio/dio.dart';
@@ -17,33 +18,34 @@ import '/utils/dio_error_formatter.dart';
 
 @immutable
 class SteamState {
-  const SteamState({required this.steamAccountLink});
+  const SteamState({required this.steamAccountLink, required this.gamesList});
 
   final SteamAccountLink? steamAccountLink;
+  final List<SteamGame> gamesList;
 
-  SteamState copyWith({SteamAccountLink? steamAccountLink}) {
+  SteamState copyWith({SteamAccountLink? steamAccountLink, List<SteamGame>? gamesList}) {
     return SteamState(
       steamAccountLink: steamAccountLink ?? this.steamAccountLink,
+      gamesList: gamesList ?? this.gamesList,
     );
   }
 
   SteamState nullableCopyWith({SteamAccountLink? Function()? steamAccountLink}) {
     return SteamState(
       steamAccountLink: steamAccountLink != null ? steamAccountLink() : this.steamAccountLink,
+      gamesList: gamesList,
     );
   }
 }
 
 class SteamController extends StateNotifier<SteamState> {
   SteamController({required this.ref, required this.steamApiProvider, required this.apiProvider})
-      : super(const SteamState(steamAccountLink: null));
+      : super(const SteamState(steamAccountLink: null, gamesList: []));
 
   Ref ref;
 
   SteamApiProvider steamApiProvider;
   ApiProvider apiProvider;
-
-  String csAppId = "730";
 
   Future<({String redirectUrl, bool success, String message})> linkSteamAccount() async {
     try {
@@ -101,9 +103,14 @@ class SteamController extends StateNotifier<SteamState> {
 
     try {
       Response res = await steamApiProvider.dio.get(
-          "/IPlayerService/GetOwnedGames/v0001/?key=$steamApiKey&steamid=${state.steamAccountLink?.steamId}&format=json");
+          "/IPlayerService/GetOwnedGames/v0001/?key=$steamApiKey&steamid=${state.steamAccountLink?.steamId}&include_appinfo=true&format=json");
 
-      print(res);
+      state = state.copyWith(
+        gamesList: res.data["response"]["games"]
+            .map((game) => SteamGame.fromJson(game))
+            .whereType<SteamGame>()
+            .toList(),
+      );
 
       return (success: true, message: "");
     } on DioException catch (exception) {
