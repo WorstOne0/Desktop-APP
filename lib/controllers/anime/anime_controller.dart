@@ -54,7 +54,11 @@ class AnimeController extends StateNotifier<AnimeState> {
   MALApiProvider malApiProvider;
 
   int maxPages = 1;
+  int? animeMalId;
 
+  void selectAnimeId(int animeId) => animeMalId = animeId;
+
+  // *** Link / Get Account **
   Future<({String redirectUrl, bool success, String message})> linkMALAccount() async {
     try {
       Response res = await apiProvider.dio.get("/anime/link_mal_account");
@@ -140,6 +144,23 @@ class AnimeController extends StateNotifier<AnimeState> {
             .whereType<MALAnime>()
             .toList(),
       );
+
+      return (success: true, message: "");
+    } on DioException catch (exception) {
+      return (success: false, message: dioErrorFormatter(exception));
+    } catch (error) {
+      return (success: false, message: error.toString());
+    }
+  }
+
+  Future<({bool success, String message})> getAnimeById({int? animeId}) async {
+    try {
+      print(animeMalId);
+      Response res = await jikanApiProvider.dio.get("/anime/${animeMalId ?? animeId}/full");
+
+      if (res.statusCode != 200) return (success: false, message: "Erro");
+
+      state = state.copyWith(animeSelected: JikanAnime.fromJson(res.data["data"]));
 
       return (success: true, message: "");
     } on DioException catch (exception) {

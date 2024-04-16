@@ -1,4 +1,6 @@
 // Flutter Packages
+import 'package:dollars/controllers/core/route_controller.dart';
+import 'package:dollars/pages/animes/animes_details.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:number_paginator/number_paginator.dart';
@@ -311,8 +313,30 @@ class _AnimesHomeState extends ConsumerState<AnimesHome> with SingleTickerProvid
                                         crossAxisSpacing: 15,
                                         childAspectRatio: 0.6,
                                       ),
-                                      itemBuilder: (context, index) => buildAnimeCard(
-                                        malAnimeList[index],
+                                      itemBuilder: (context, index) => GestureDetector(
+                                        onTap: () {
+                                          ref
+                                              .read(animeProvider.notifier)
+                                              .selectAnimeId(malAnimeList[index].malId);
+
+                                          // Change NavBar Route
+                                          ref.read(routeProvider).navigatorKey.currentState!.push(
+                                                MaterialPageRoute(
+                                                  builder: (context) => const AnimesDetails(),
+                                                  settings: const RouteSettings(
+                                                    name: "animes_details.dart",
+                                                  ),
+                                                ),
+                                              );
+
+                                          // Update NavBar Selected
+                                          ref
+                                              .read(routeProvider.notifier)
+                                              .handleRouteStack("push", malAnimeList[index].title);
+                                        },
+                                        child: buildAnimeCard(
+                                          malAnimeList[index],
+                                        ),
                                       ),
                                     ),
                         ),
